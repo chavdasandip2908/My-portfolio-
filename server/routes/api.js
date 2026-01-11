@@ -44,18 +44,13 @@ router.post('/admin/resume/upload', adminAuth, upload.single('resume'), async (r
             return res.status(400).json({ error: 'Please upload a PDF file.' });
         }
 
-        const { version } = req.body;
-        if (!version) {
-            return res.status(400).json({ error: 'Version string is required.' });
-        }
-
         // Deactivate all previous resumes
         await Resume.updateMany({}, { isActive: false });
 
         const newResume = new Resume({
-            version,
-            fileName: req.file.filename,
-            filePath: req.file.path,
+            filename: req.file.filename,
+            originalName: req.file.originalname,
+            path: req.file.path,
             isActive: true
         });
 
@@ -91,9 +86,9 @@ router.get('/resume/download', async (req, res) => {
         resume.downloadCount += 1;
         await resume.save();
 
-        const filePath = path.join(__dirname, '..', resume.filePath);
+        const filePath = resume.path; // Use 'path' from new schema
         if (fs.existsSync(filePath)) {
-            res.download(filePath, `Resume_${resume.version}.pdf`);
+            res.download(filePath, resume.originalName || 'Resume.pdf');
         } else {
             res.status(404).json({ error: 'File not found on server.' });
         }
