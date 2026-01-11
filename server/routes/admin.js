@@ -11,7 +11,12 @@ const {
     deleteResume,
     getContacts,
     markAsRead,
-    deleteContact
+    deleteContact,
+    getProjects,
+    createProject,
+    updateProject,
+    deleteProject,
+    toggleFeatured
 } = require('../controllers/adminController');
 
 // Public routes
@@ -33,5 +38,12 @@ router.delete('/resumes/:id', deleteResume);
 router.get('/contacts', getContacts);
 router.put('/contacts/:id/read', markAsRead);
 router.delete('/contacts/:id', deleteContact);
+
+// Project routes
+router.get('/projects', getProjects);
+router.post('/projects', createProject);
+router.put('/projects/:id', updateProject);
+router.delete('/projects/:id', deleteProject);
+router.put('/projects/:id/toggle-featured', toggleFeatured);
 
 module.exports = router;

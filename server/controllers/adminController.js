@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Resume = require('../models/Resume');
 const Contact = require('../models/Contact');
+const Project = require('../models/Project');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -89,6 +90,8 @@ const getStats = async (req, res) => {
         ]);
         const totalContacts = await Contact.countDocuments();
         const unreadContacts = await Contact.countDocuments({ isRead: false });
+        const totalProjects = await Project.countDocuments();
+        const featuredProjects = await Project.countDocuments({ isFeatured: true });
         const recentContacts = await Contact.find()
             .sort({ submittedAt: -1 })
             .limit(5)
@@ -102,6 +105,8 @@ const getStats = async (req, res) => {
                 totalDownloads: (totalDownloads[0] && totalDownloads[0].total) || 0,
                 totalContacts,
                 unreadContacts,
+                totalProjects,
+                featuredProjects,
                 recentContacts
             }
         });
@@ -315,6 +320,134 @@ const deleteContact = async (req, res) => {
     }
 };
 
+// ============ PROJECT CRUD OPERATIONS ============
+
+// Get All Projects
+const getProjects = async (req, res) => {
+    try {
+        const projects = await Project.find().sort({ createdAt: -1 });
+        res.json({
+            success: true,
+            projects
+        });
+    } catch (error) {
+        console.error('Get projects error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch projects'
+        });
+    }
+};
+
+// Create Project
+const createProject = async (req, res) => {
+    try {
+        const project = new Project(req.body);
+        await project.save();
+
+        res.json({
+            success: true,
+            message: 'Project created successfully',
+            project
+        });
+    } catch (error) {
+        console.error('Create project error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to create project'
+        });
+    }
+};
+
+// Update Project
+const updateProject = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const project = await Project.findByIdAndUpdate(
+            id,
+            req.body,
+            { new: true, runValidators: true }
+        );
+
+        if (!project) {
+            return res.status(404).json({
+                success: false,
+                message: 'Project not found'
+            });
+        }
+
+        res.json({
+            success: true,
+            message: 'Project updated successfully',
+            project
+        });
+    } catch (error) {
+        console.error('Update project error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to update project'
+        });
+    }
+};
+
+// Delete Project
+const deleteProject = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const project = await Project.findByIdAndDelete(id);
+
+        if (!project) {
+            return res.status(404).json({
+                success: false,
+                message: 'Project not found'
+            });
+        }
+
+        res.json({
+            success: true,
+            message: 'Project deleted successfully'
+        });
+    } catch (error) {
+        console.error('Delete project error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete project'
+        });
+    }
+};
+
+// Toggle Featured Status
+const toggleFeatured = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const project = await Project.findById(id);
+        if (!project) {
+            return res.status(404).json({
+                success: false,
+                message: 'Project not found'
+            });
+        }
+
+        project.isFeatured = !project.isFeatured;
+        await project.save();
+
+        res.json({
+            success: true,
+            message: `Project ${project.isFeatured ? 'featured' : 'unfeatured'} successfully`,
+            project
+        });
+    } catch (error) {
+        console.error('Toggle featured error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to toggle featured status'
+        });
+    }
+};
+
 module.exports = {
     login,
     verifyToken,
@@ -325,5 +458,10 @@ module.exports = {
     deleteResume,
     getContacts,
     markAsRead,
-    deleteContact
+    deleteContact,
+    getProjects,
+    createProject,
+    updateProject,
+    deleteProject,
+    toggleFeatured
 };

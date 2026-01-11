@@ -66,6 +66,7 @@
                     <button class="tab-button active px-6 py-3 rounded-t-lg transition"
                         data-tab="dashboard">Dashboard</button>
                     <button class="tab-button px-6 py-3 rounded-t-lg transition" data-tab="resumes">Resumes</button>
+                    <button class="tab-button px-6 py-3 rounded-t-lg transition" data-tab="projects">Projects</button>
                     <button class="tab-button px-6 py-3 rounded-t-lg transition" data-tab="contacts">Contacts</button>
                 </div>
             </div>
@@ -78,7 +79,7 @@
                 <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
 
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
                     <div class="bg-white p-6 rounded-lg shadow-lg">
                         <div class="text-gray-500 text-sm">Total Resumes</div>
                         <div id="statTotalResumes" class="text-3xl font-bold text-indigo-600">0</div>
@@ -90,6 +91,11 @@
                     <div class="bg-white p-6 rounded-lg shadow-lg">
                         <div class="text-gray-500 text-sm">Total Downloads</div>
                         <div id="statTotalDownloads" class="text-3xl font-bold text-purple-600">0</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <div class="text-gray-500 text-sm">Total Projects</div>
+                        <div id="statTotalProjects" class="text-3xl font-bold text-blue-600">0</div>
+                        <div id="statFeaturedProjects" class="text-sm text-blue-500 mt-1"></div>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-lg">
                         <div class="text-gray-500 text-sm">Contact Submissions</div>
@@ -130,6 +136,77 @@
                 <div class="bg-white p-6 rounded-lg shadow-lg">
                     <h3 class="text-xl font-bold mb-4">All Resumes</h3>
                     <div id="resumesList" class="overflow-x-auto"></div>
+                </div>
+            </div>
+
+            <!-- Projects Tab -->
+            <div id="projects" class="tab-content">
+                <h2 class="text-3xl font-bold mb-6">Project Management</h2>
+
+                <!-- Add/Edit Project Form -->
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h3 class="text-xl font-bold mb-4" id="projectFormTitle">Add New Project</h3>
+                    <form id="projectForm" class="space-y-4">
+                        <input type="hidden" id="projectId">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Title *</label>
+                                <input type="text" id="projectTitle" class="w-full px-4 py-2 border rounded-lg"
+                                    required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">Status *</label>
+                                <select id="projectStatus" class="w-full px-4 py-2 border rounded-lg" required>
+                                    <option value="live">Live</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Description *</label>
+                            <textarea id="projectDescription" rows="3" class="w-full px-4 py-2 border rounded-lg"
+                                required></textarea>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Technologies (comma-separated) *</label>
+                                <input type="text" id="projectTech" placeholder="React, Node.js, MongoDB"
+                                    class="w-full px-4 py-2 border rounded-lg" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">GitHub URL</label>
+                                <input type="url" id="projectGithub" placeholder="https://github.com/..."
+                                    class="w-full px-4 py-2 border rounded-lg">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Live URL</label>
+                            <input type="url" id="projectLive" placeholder="https://..."
+                                class="w-full px-4 py-2 border rounded-lg">
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="projectFeatured" class="mr-2">
+                            <label for="projectFeatured" class="text-gray-700">Featured Project</label>
+                        </div>
+                        <div class="flex gap-4">
+                            <button type="submit"
+                                class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                <span id="projectSubmitText">Add Project</span>
+                            </button>
+                            <button type="button" id="cancelEdit"
+                                class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition hidden">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                    <div id="projectFormStatus" class="mt-2 text-sm"></div>
+                </div>
+
+                <!-- Projects List -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">All Projects</h3>
+                    <div id="projectsList" class="overflow-x-auto"></div>
                 </div>
             </div>
 
@@ -198,6 +275,7 @@
 
                 if (tabName === 'dashboard') loadDashboard();
                 if (tabName === 'resumes') loadResumes();
+                if (tabName === 'projects') loadProjects();
                 if (tabName === 'contacts') loadContacts();
             });
         });
@@ -222,6 +300,9 @@
                     document.getElementById('statTotalResumes').textContent = stats.totalResumes;
                     document.getElementById('statActiveResume').textContent = stats.activeResume;
                     document.getElementById('statTotalDownloads').textContent = stats.totalDownloads;
+                    document.getElementById('statTotalProjects').textContent = stats.totalProjects;
+                    document.getElementById('statFeaturedProjects').textContent =
+                        stats.featuredProjects > 0 ? `${stats.featuredProjects} featured` : '';
                     document.getElementById('statTotalContacts').textContent = stats.totalContacts;
                     document.getElementById('statUnreadContacts').textContent =
                         stats.unreadContacts > 0 ? `${stats.unreadContacts} unread` : '';
@@ -458,6 +539,211 @@
                 }
             } catch (error) {
                 alert('Failed to delete contact');
+            }
+        }
+
+        // ============ PROJECT MANAGEMENT FUNCTIONS ============
+
+        // Load Projects
+        async function loadProjects() {
+            try {
+                const res = await fetch(`${API_BASE}/admin/projects`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    const tableHTML = `
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left">Title</th>
+                                    <th class="px-4 py-3 text-left">Technologies</th>
+                                    <th class="px-4 py-3 text-left">Status</th>
+                                    <th class="px-4 py-3 text-left">Featured</th>
+                                    <th class="px-4 py-3 text-left">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.projects.map(p => `
+                                    <tr class="border-t">
+                                        <td class="px-4 py-3 font-semibold">${p.title}</td>
+                                        <td class="px-4 py-3">
+                                            ${p.technologies.slice(0, 3).map(t =>
+                        `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs mr-1">${t}</span>`
+                    ).join('')}
+                                            ${p.technologies.length > 3 ? `<span class="text-gray-500 text-xs">+${p.technologies.length - 3}</span>` : ''}
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <span class="px-2 py-1 rounded text-sm ${p.status === 'live' ? 'bg-green-100 text-green-800' :
+                            p.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-gray-100 text-gray-800'
+                        }">${p.status}</span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <button onclick="toggleFeatured('${p._id}')" 
+                                                class="px-3 py-1 rounded text-sm ${p.isFeatured ?
+                            'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' :
+                            'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }">
+                                                ${p.isFeatured ? '⭐ Featured' : '☆ Feature'}
+                                            </button>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <button onclick="editProject('${p._id}')" 
+                                                class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 mr-2">
+                                                Edit
+                                            </button>
+                                            <button onclick="deleteProject('${p._id}')" 
+                                                class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                    document.getElementById('projectsList').innerHTML = tableHTML || '<p class="text-gray-500">No projects yet</p>';
+                }
+            } catch (error) {
+                console.error('Failed to load projects:', error);
+            }
+        }
+
+        // Project Form Submit
+        document.getElementById('projectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const projectId = document.getElementById('projectId').value;
+            const projectData = {
+                title: document.getElementById('projectTitle').value,
+                description: document.getElementById('projectDescription').value,
+                technologies: document.getElementById('projectTech').value.split(',').map(t => t.trim()),
+                githubUrl: document.getElementById('projectGithub').value,
+                liveUrl: document.getElementById('projectLive').value,
+                status: document.getElementById('projectStatus').value,
+                isFeatured: document.getElementById('projectFeatured').checked
+            };
+
+            try {
+                document.getElementById('projectFormStatus').innerHTML = '<span class="text-blue-600">Saving...</span>';
+
+                const url = projectId ?
+                    `${API_BASE}/admin/projects/${projectId}` :
+                    `${API_BASE}/admin/projects`;
+
+                const method = projectId ? 'PUT' : 'POST';
+
+                const res = await fetch(url, {
+                    method,
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(projectData)
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    document.getElementById('projectFormStatus').innerHTML =
+                        `<span class="text-green-600">✓ ${projectId ? 'Updated' : 'Created'} successfully!</span>`;
+                    document.getElementById('projectForm').reset();
+                    document.getElementById('projectId').value = '';
+                    document.getElementById('projectFormTitle').textContent = 'Add New Project';
+                    document.getElementById('projectSubmitText').textContent = 'Add Project';
+                    document.getElementById('cancelEdit').classList.add('hidden');
+                    loadProjects();
+                    loadDashboard();
+                } else {
+                    document.getElementById('projectFormStatus').innerHTML =
+                        `<span class="text-red-600">✗ ${data.message}</span>`;
+                }
+            } catch (error) {
+                document.getElementById('projectFormStatus').innerHTML =
+                    '<span class="text-red-600">✗ Failed to save project</span>';
+            }
+        });
+
+        // Edit Project
+        async function editProject(id) {
+            try {
+                const res = await fetch(`${API_BASE}/admin/projects`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    const project = data.projects.find(p => p._id === id);
+                    if (project) {
+                        document.getElementById('projectId').value = project._id;
+                        document.getElementById('projectTitle').value = project.title;
+                        document.getElementById('projectDescription').value = project.description;
+                        document.getElementById('projectTech').value = project.technologies.join(', ');
+                        document.getElementById('projectGithub').value = project.githubUrl || '';
+                        document.getElementById('projectLive').value = project.liveUrl || '';
+                        document.getElementById('projectStatus').value = project.status;
+                        document.getElementById('projectFeatured').checked = project.isFeatured;
+
+                        document.getElementById('projectFormTitle').textContent = 'Edit Project';
+                        document.getElementById('projectSubmitText').textContent = 'Update Project';
+                        document.getElementById('cancelEdit').classList.remove('hidden');
+
+                        // Scroll to form
+                        document.getElementById('projectForm').scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            } catch (error) {
+                alert('Failed to load project details');
+            }
+        }
+
+        // Cancel Edit
+        document.getElementById('cancelEdit').addEventListener('click', () => {
+            document.getElementById('projectForm').reset();
+            document.getElementById('projectId').value = '';
+            document.getElementById('projectFormTitle').textContent = 'Add New Project';
+            document.getElementById('projectSubmitText').textContent = 'Add Project';
+            document.getElementById('cancelEdit').classList.add('hidden');
+            document.getElementById('projectFormStatus').innerHTML = '';
+        });
+
+        // Delete Project
+        async function deleteProject(id) {
+            if (!confirm('Delete this project?')) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/admin/projects/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    loadProjects();
+                    loadDashboard();
+                }
+            } catch (error) {
+                alert('Failed to delete project');
+            }
+        }
+
+        // Toggle Featured
+        async function toggleFeatured(id) {
+            try {
+                const res = await fetch(`${API_BASE}/admin/projects/${id}/toggle-featured`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    loadProjects();
+                    loadDashboard();
+                }
+            } catch (error) {
+                alert('Failed to toggle featured status');
             }
         }
 
