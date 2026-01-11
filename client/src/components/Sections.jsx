@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { API_ENDPOINTS } from '../config/api';
 
 const Services = () => {
     const services = [
@@ -129,7 +130,7 @@ const Contact = () => {
         setSending(true);
 
         try {
-            const response = await fetch('http://localhost:5001/api/contact/send', {
+            const response = await fetch(API_ENDPOINTS.contactSend, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

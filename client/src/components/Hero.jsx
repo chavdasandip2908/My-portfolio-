@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import toast from 'react-hot-toast';
+import { API_ENDPOINTS } from '../config/api';
 
 const Hero = () => {
     const { theme } = useTheme();
@@ -26,7 +27,7 @@ const Hero = () => {
         setDownloading(true);
 
         try {
-            const response = await fetch('http://localhost:5001/api/resume/download');
+            const response = await fetch(API_ENDPOINTS.resumeDownload);
 
             if (!response.ok) {
                 throw new Error('Resume not found');

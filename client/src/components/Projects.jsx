@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
@@ -9,7 +10,7 @@ const Projects = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const res = await axios.get('http://localhost:5001/api/projects/featured');
+                const res = await axios.get(API_ENDPOINTS.projects);
                 setProjects(res.data);
             } catch (err) {
                 console.error("Failed to fetch projects, using fallback data", err);
