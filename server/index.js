@@ -21,12 +21,15 @@ app.use(cors({
             'http://localhost:3000',
             'http://localhost:5173',
             'https://sandip-dev.onrender.com',
-            process.env.FRONTEND_URL
+            "http://localhost:5001",
+            process.env.FRONTEND_URL,
+            process.env.SERVER_URL,
         ].filter(Boolean);
 
         if (allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
+            console.log(`CORS Warning: Origin ${origin} is not in allowed list, but allowing for development.`);
             callback(new Error('Not allowed by CORS'));
         }
     },

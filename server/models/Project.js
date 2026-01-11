@@ -11,7 +11,7 @@ const ProjectSchema = new mongoose.Schema({
     isFeatured: { type: Boolean, default: false },
     status: {
         type: String,
-        enum: ['live', 'in-progress', 'archived'],
+        enum: ['live', 'in-progress', 'completed'],
         default: 'live'
     },
     createdAt: { type: Date, default: Date.now }
