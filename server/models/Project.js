@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const ProjectSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    problem: { type: String, required: true },
-    solution: { type: String, required: true },
+    problem: { type: String },
+    solution: { type: String },
     techStack: { type: [String], required: true },
     liveUrl: { type: String },
     githubUrl: { type: String },
