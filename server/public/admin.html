@@ -572,7 +572,7 @@
                                             ${(p.techStack || []).slice(0, 3).map(t =>
                         `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs mr-1">${t}</span>`
                     ).join('')}
-                                            ${(p.techStack?.length || 0) > 3 ? `<span class="text-gray-500 text-xs">+${p.technologies.length - 3}</span>` : ''}
+                                            ${(p.techStack?.length || 0) > 3 ? `<span class="text-gray-500 text-xs">+${p.techStack.length - 3}</span>` : ''}
                                         </td>
                                         <td class="px-4 py-3">
                                             <span class="px-2 py-1 rounded text-sm ${p.status === 'live' ? 'bg-green-100 text-green-800' :
@@ -619,7 +619,7 @@
             const projectData = {
                 title: document.getElementById('projectTitle').value,
                 description: document.getElementById('projectDescription').value,
-                technologies: document.getElementById('projectTech').value.split(',').map(t => t.trim()),
+                techStack: document.getElementById('projectTech').value.split(',').map(t => t.trim()),
                 githubUrl: document.getElementById('projectGithub').value,
                 liveUrl: document.getElementById('projectLive').value,
                 status: document.getElementById('projectStatus').value,
@@ -680,7 +680,7 @@
                         document.getElementById('projectId').value = project._id;
                         document.getElementById('projectTitle').value = project.title;
                         document.getElementById('projectDescription').value = project.description;
-                        document.getElementById('projectTech').value = (project.technologies || []).join(', ');
+                        document.getElementById('projectTech').value = (project.techStack || []).join(', ');
                         document.getElementById('projectGithub').value = project.githubUrl || '';
                         document.getElementById('projectLive').value = project.liveUrl || '';
                         document.getElementById('projectStatus').value = project.status;
