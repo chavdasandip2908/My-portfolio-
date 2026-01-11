@@ -660,8 +660,11 @@
 
                 if (data.success) {
                     document.getElementById('projectFormStatus').innerHTML =
-                        `<span class="text-green-600">✓ ${projectId ? 'Updated' : 'Created'} successfully!</span>`;
+                        `<span class="text-green-600">✓ ${data.message || (projectId ? 'Updated' : 'Created') + ' successfully!'}</span>`;
                     document.getElementById('projectForm').reset();
+                    // Explicitly clear values in case reset misses them
+                    document.getElementById('projectProblem').value = '';
+                    document.getElementById('projectSolution').value = '';
                     document.getElementById('projectId').value = '';
                     document.getElementById('projectFormTitle').textContent = 'Add New Project';
                     document.getElementById('projectSubmitText').textContent = 'Add Project';
@@ -717,6 +720,8 @@
         document.getElementById('cancelEdit').addEventListener('click', () => {
             document.getElementById('projectForm').reset();
             document.getElementById('projectId').value = '';
+            document.getElementById('projectProblem').value = '';
+            document.getElementById('projectSolution').value = '';
             document.getElementById('projectFormTitle').textContent = 'Add New Project';
             document.getElementById('projectSubmitText').textContent = 'Add Project';
             document.getElementById('cancelEdit').classList.add('hidden');
