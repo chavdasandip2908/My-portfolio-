@@ -4,7 +4,7 @@ const commands = {
     help: "Available commands:\n  • about\n  • skills\n  • projects\n  • services\n  • experience\n  • contact\n  • hire\n  • clear",
     about: "I am a Senior Full-Stack Engineer with a passion for clean code and scalable systems.",
     skills: "Frontend: React, Tailwind, Framer Motion\nBackend: Node.js, Express, MongoDB, Docker\nLanguages: JavaScript, TypeScript, Python, SQL",
-    projects: "Type 'projects' to see my work... actually, just scroll down to the Projects section!",
+    projects: "Redirecting to projects section...",
     services: "- API Development\n- Web Application Architecture\n- Performance Optimization\n- Technical Consulting",
     experience: "5+ years of experience building enterprise-grade applications and freelancing for global clients.",
     contact: "Email: sandip@example.com\nLinkedIn: linkedin.com/in/sandip\nGitHub: github.com/sandip",
@@ -42,7 +42,13 @@ const Terminal = () => {
             setTimeout(() => {
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }, 500);
-        } else if (commands[trimmedCmd]) {
+        } else if (trimmedCmd === 'projects') {
+            newHistory.push({ type: 'output', content: commands.projects });
+            setTimeout(() => {
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        }
+        else if (commands[trimmedCmd]) {
             newHistory.push({ type: 'output', content: commands[trimmedCmd] });
         } else {
             newHistory.push({ type: 'error', content: `Command not found: ${trimmedCmd}. Type 'help' for list.` });
