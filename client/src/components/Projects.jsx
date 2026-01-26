@@ -2,42 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { API_ENDPOINTS } from '../config/api';
+import ProjectDetailModal from './ProjectDetailModal';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const res = await axios.get(API_ENDPOINTS.projects);
+                // Use summary API for faster initial load
+                const res = await axios.get(API_ENDPOINTS.projectsSummary);
                 setProjects(res.data);
             } catch (err) {
-                console.error("Failed to fetch projects, using fallback data", err);
-                setProjects([
-                    {
-                        _id: '1',
-                        title: 'E-Commerce Platform',
-                        description: 'A scalable e-commerce solution with real-time inventory.',
-                        techStack: ['React', 'Node.js', 'Redis'],
-                        status: 'live',
-                        liveUrl: '#',
-                        githubUrl: '#',
-                        problem: 'Legacy system was slow and unable to handle flash sales.',
-                        solution: 'Rebuilt using microservices architecture and Redis caching.'
-                    },
-                    {
-                        _id: '2',
-                        title: 'Task Management App',
-                        description: 'Collaborative task manager for remote teams.',
-                        techStack: ['Vue', 'Firebase', 'Tailwind'],
-                        status: 'in-progress',
-                        liveUrl: '#',
-                        githubUrl: '#',
-                        problem: 'Existing tools were too complex for small teams.',
-                        solution: 'Simplified UI with realtime updates via Firebase.'
-                    }
-                ]);
+                console.error("Failed to fetch projects", err);
+                setProjects([]);
             } finally {
                 setLoading(false);
             }
@@ -45,6 +26,16 @@ const Projects = () => {
 
         fetchProjects();
     }, []);
+
+    const handleProjectClick = (project) => {
+        setSelectedProject(project);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setTimeout(() => setSelectedProject(null), 300);
+    };
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -74,13 +65,17 @@ const Projects = () => {
                         Featured <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Projects</span>
                     </h2>
                     <p className="text-light-muted dark:text-dark-muted max-w-2xl mx-auto text-lg">
-                        A selection of projects that demonstrate my ability to solve complex problems.
+                        Explore my portfolio of projects showcasing innovative solutions and technical expertise.
                     </p>
                 </motion.div>
 
                 {loading ? (
                     <div className="text-center">
                         <div className="inline-block w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                ) : projects.length === 0 ? (
+                    <div className="text-center text-gray-500 dark:text-gray-400">
+                        <p className="text-xl">No projects available yet.</p>
                     </div>
                 ) : (
                     <motion.div
@@ -90,93 +85,85 @@ const Projects = () => {
                         viewport={{ once: true }}
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                     >
-                        {projects.map((project) => (
-                            <motion.div
-                                key={project._id}
-                                variants={cardVariants}
-                                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                                className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all"
-                            >
-                                {/* Gradient Overlay on Hover */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        {projects.map((project) => {
+                            // Backward compatibility
+                            const technologies = project.technology || project.techStack || [];
+                            const projectImage = project.projectImage || null;
 
-                                <div className="relative p-6">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="p-3 bg-primary/10 rounded-xl">
-                                            <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            return (
+                                <motion.div
+                                    key={project._id}
+                                    variants={cardVariants}
+                                    whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                                    onClick={() => handleProjectClick(project)}
+                                    className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all cursor-pointer"
+                                >
+                                    {/* Gradient Overlay on Hover */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                    {/* Project Image */}
+                                    {projectImage && (
+                                        <div className="relative h-48 overflow-hidden">
+                                            <img
+                                                src={projectImage}
+                                                alt={project.title}
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                        </div>
+                                    )}
+
+                                    <div className="relative p-6">
+                                        {/* Title */}
+                                        <h3 className="text-2xl font-bold text-light-text dark:text-dark-text mb-3 group-hover:text-primary transition-colors">
+                                            {project.title}
+                                        </h3>
+
+                                        {/* Description (Truncated) */}
+                                        <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed line-clamp-3">
+                                            {project.description}
+                                        </p>
+
+                                        {/* Technology Stack */}
+                                        <div className="flex flex-wrap gap-2 mb-4">
+                                            {technologies.slice(0, 3).map((tech, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 text-xs font-medium rounded-lg"
+                                                >
+                                                    {tech}
+                                                </span>
+                                            ))}
+                                            {technologies.length > 3 && (
+                                                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium rounded-lg">
+                                                    +{technologies.length - 3} more
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        {/* View Details Button */}
+                                        <div className="flex items-center text-primary group-hover:text-indigo-700 dark:group-hover:text-indigo-400 font-medium text-sm transition-colors">
+                                            View Details
+                                            <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                             </svg>
                                         </div>
-                                        <span className={`px-3 py-1 text-xs font-semibold rounded-full ${project.status === 'live' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
-                                            project.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                                                'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400'
-                                            }`}>
-                                            {project.status}
-                                        </span>
                                     </div>
-
-                                    <h3 className="text-2xl font-bold text-light-text dark:text-dark-text mb-3 group-hover:text-primary transition-colors">
-                                        {project.title}
-                                    </h3>
-                                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed">
-                                        {project.description}
-                                    </p>
-
-                                    <div className="space-y-3 mb-6">
-                                        <div>
-                                            <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1">
-                                                <span className="w-1 h-1 bg-red-500 rounded-full"></span> Problem
-                                            </h4>
-                                            <p className="text-sm text-gray-700 dark:text-gray-300">{project.problem}</p>
-                                        </div>
-
-                                        <div>
-                                            <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1">
-                                                <span className="w-1 h-1 bg-green-500 rounded-full"></span> Solution
-                                            </h4>
-                                            <p className="text-sm text-gray-700 dark:text-gray-300">{project.solution}</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex flex-wrap gap-2 mb-6">
-                                        {project.techStack.map(tech => (
-                                            <span key={tech} className="px-3 py-1 bg-gray-100 dark:bg-gray-700/50 text-xs font-medium rounded-lg text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600">
-                                                {tech}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex gap-3">
-                                        {project.liveUrl && (
-                                            <a
-                                                href={project.liveUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex-1 text-center py-2.5 bg-primary text-white rounded-lg hover:bg-indigo-700 transition font-medium text-sm"
-                                            >
-                                                Live Demo
-                                            </a>
-                                        )}
-                                        {project.githubUrl && (
-                                            <a
-                                                href={project.githubUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex-1 text-center py-2.5 border-2 border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition font-medium text-sm"
-                                            >
-                                                GitHub
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
+                                </motion.div>
+                            );
+                        })}
                     </motion.div>
                 )}
             </div>
+
+            {/* Project Detail Modal */}
+            <ProjectDetailModal
+                project={selectedProject}
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+            />
         </section>
     );
 };
 
 export default Projects;
-

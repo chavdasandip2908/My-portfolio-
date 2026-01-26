@@ -149,58 +149,70 @@
                     <h3 class="text-xl font-bold mb-4" id="projectFormTitle">Add New Project</h3>
                     <form id="projectForm" class="space-y-4">
                         <input type="hidden" id="projectId">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-gray-700 mb-2">Title *</label>
-                                <input type="text" id="projectTitle" class="w-full px-4 py-2 border rounded-lg"
-                                    required>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 mb-2">Status *</label>
-                                <select id="projectStatus" class="w-full px-4 py-2 border rounded-lg" required>
-                                    <option value="live">Live</option>
-                                    <option value="in-progress">In Progress</option>
-                                    <option value="completed">Completed</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">Description *</label>
-                            <textarea id="projectDescription" rows="3" class="w-full px-4 py-2 border rounded-lg"
-                                required></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">Problem</label>
-                            <textarea id="projectProblem" rows="3" class="w-full px-4 py-2 border rounded-lg"
-                                placeholder="What problem does this project solve?"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">Solution</label>
-                            <textarea id="projectSolution" rows="3" class="w-full px-4 py-2 border rounded-lg"
-                                placeholder="How does your solution address the problem?"></textarea>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-gray-700 mb-2">Technologies (comma-separated) *</label>
-                                <input type="text" id="projectTech" placeholder="React, Node.js, MongoDB"
-                                    class="w-full px-4 py-2 border rounded-lg" required>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 mb-2">GitHub URL</label>
-                                <input type="url" id="projectGithub" placeholder="https://github.com/..."
-                                    class="w-full px-4 py-2 border rounded-lg">
+
+                        <!-- Required Fields Section -->
+                        <div class="border-b pb-4">
+                            <h4 class="text-lg font-semibold text-gray-700 mb-3">Required Information</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Title *</label>
+                                    <input type="text" id="projectTitle" class="w-full px-4 py-2 border rounded-lg"
+                                        required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Description *</label>
+                                    <textarea id="projectDescription" rows="3"
+                                        class="w-full px-4 py-2 border rounded-lg" required></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Project Image (Upload or Base64) *</label>
+                                    <input type="file" id="projectImageFile" accept="image/*"
+                                        class="w-full px-4 py-2 border rounded-lg mb-2">
+                                    <textarea id="projectImage" rows="2"
+                                        class="w-full px-4 py-2 border rounded-lg text-sm font-mono"
+                                        placeholder="Base64 image string will appear here after upload, or paste your own base64 string"
+                                        required></textarea>
+                                    <div id="imagePreview" class="mt-2"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Roles & Responsibility *</label>
+                                    <textarea id="projectRoles" rows="3" class="w-full px-4 py-2 border rounded-lg"
+                                        placeholder="e.g., Full Stack Developer - Designed and implemented the entire application"
+                                        required></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Technologies (comma-separated) *</label>
+                                    <input type="text" id="projectTech" placeholder="React, Node.js, MongoDB"
+                                        class="w-full px-4 py-2 border rounded-lg" required>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Optional Fields Section -->
                         <div>
-                            <label class="block text-gray-700 mb-2">Live URL</label>
-                            <input type="url" id="projectLive" placeholder="https://..."
-                                class="w-full px-4 py-2 border rounded-lg">
+                            <h4 class="text-lg font-semibold text-gray-700 mb-3">Optional Information</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Duration</label>
+                                    <input type="text" id="projectDuration" placeholder="e.g., 3 months, 6 weeks"
+                                        class="w-full px-4 py-2 border rounded-lg">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Source Code Link</label>
+                                        <input type="url" id="projectSourceCode" placeholder="https://github.com/..."
+                                            class="w-full px-4 py-2 border rounded-lg">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2">Live View Link</label>
+                                        <input type="url" id="projectLiveView" placeholder="https://..."
+                                            class="w-full px-4 py-2 border rounded-lg">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" id="projectFeatured" class="mr-2">
-                            <label for="projectFeatured" class="text-gray-700">Featured Project</label>
-                        </div>
-                        <div class="flex gap-4">
+
+                        <div class="flex gap-4 pt-4">
                             <button type="submit"
                                 class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
                                 <span id="projectSubmitText">Add Project</span>
@@ -312,8 +324,6 @@
                     document.getElementById('statActiveResume').textContent = stats.activeResume;
                     document.getElementById('statTotalDownloads').textContent = stats.totalDownloads;
                     document.getElementById('statTotalProjects').textContent = stats.totalProjects;
-                    document.getElementById('statFeaturedProjects').textContent =
-                        stats.featuredProjects > 0 ? `${stats.featuredProjects} featured` : '';
                     document.getElementById('statTotalContacts').textContent = stats.totalContacts;
                     document.getElementById('statUnreadContacts').textContent =
                         stats.unreadContacts > 0 ? `${stats.unreadContacts} unread` : '';
@@ -555,6 +565,23 @@
 
         // ============ PROJECT MANAGEMENT FUNCTIONS ============
 
+        // Image Upload Handler
+        document.getElementById('projectImageFile').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const base64String = event.target.result;
+                    document.getElementById('projectImage').value = base64String;
+
+                    // Show preview
+                    document.getElementById('imagePreview').innerHTML =
+                        `<img src="${base64String}" class="max-w-xs max-h-48 rounded border" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
         // Load Projects
         async function loadProjects() {
             try {
@@ -570,8 +597,6 @@
                                 <tr>
                                     <th class="px-4 py-3 text-left">Title</th>
                                     <th class="px-4 py-3 text-left">Technologies</th>
-                                    <th class="px-4 py-3 text-left">Status</th>
-                                    <th class="px-4 py-3 text-left">Featured</th>
                                     <th class="px-4 py-3 text-left">Actions</th>
                                 </tr>
                             </thead>
@@ -580,25 +605,10 @@
                                     <tr class="border-t">
                                         <td class="px-4 py-3 font-semibold">${p.title}</td>
                                         <td class="px-4 py-3">
-                                            ${(p.techStack || []).slice(0, 3).map(t =>
+                                            ${(p.technology || p.techStack || []).slice(0, 3).map(t =>
                         `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs mr-1">${t}</span>`
                     ).join('')}
-                                            ${(p.techStack?.length || 0) > 3 ? `<span class="text-gray-500 text-xs">+${p.techStack.length - 3}</span>` : ''}
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <span class="px-2 py-1 rounded text-sm ${p.status === 'live' ? 'bg-green-100 text-green-800' :
-                            p.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' :
-                                'bg-gray-100 text-gray-800'
-                        }">${p.status}</span>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <button onclick="toggleFeatured('${p._id}')" 
-                                                class="px-3 py-1 rounded text-sm ${p.isFeatured ?
-                            'bg-yellow-100 text-yellow-800 hover:bg-yellow-200' :
-                            'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                        }">
-                                                ${p.isFeatured ? '⭐ Featured' : '☆ Feature'}
-                                            </button>
+                                            ${((p.technology || p.techStack || []).length) > 3 ? `<span class="text-gray-500 text-xs">+${(p.technology || p.techStack).length - 3}</span>` : ''}
                                         </td>
                                         <td class="px-4 py-3">
                                             <button onclick="editProject('${p._id}')" 
@@ -630,13 +640,12 @@
             const projectData = {
                 title: document.getElementById('projectTitle').value,
                 description: document.getElementById('projectDescription').value,
-                problem: document.getElementById('projectProblem').value,
-                solution: document.getElementById('projectSolution').value,
-                techStack: document.getElementById('projectTech').value.split(',').map(t => t.trim()),
-                githubUrl: document.getElementById('projectGithub').value,
-                liveUrl: document.getElementById('projectLive').value,
-                status: document.getElementById('projectStatus').value,
-                isFeatured: document.getElementById('projectFeatured').checked
+                projectImage: document.getElementById('projectImage').value,
+                rolesResponsibility: document.getElementById('projectRoles').value,
+                technology: document.getElementById('projectTech').value.split(',').map(t => t.trim()),
+                duration: document.getElementById('projectDuration').value || undefined,
+                sourceCodeLink: document.getElementById('projectSourceCode').value || undefined,
+                liveViewLink: document.getElementById('projectLiveView').value || undefined
             };
 
             try {
@@ -663,10 +672,9 @@
                     document.getElementById('projectFormStatus').innerHTML =
                         `<span class="text-green-600">✓ ${data.message || (projectId ? 'Updated' : 'Created') + ' successfully!'}</span>`;
                     document.getElementById('projectForm').reset();
-                    // Explicitly clear values in case reset misses them
-                    document.getElementById('projectProblem').value = '';
-                    document.getElementById('projectSolution').value = '';
                     document.getElementById('projectId').value = '';
+                    document.getElementById('projectImage').value = '';
+                    document.getElementById('imagePreview').innerHTML = '';
                     document.getElementById('projectFormTitle').textContent = 'Add New Project';
                     document.getElementById('projectSubmitText').textContent = 'Add Project';
                     document.getElementById('cancelEdit').classList.add('hidden');
@@ -696,13 +704,18 @@
                         document.getElementById('projectId').value = project._id;
                         document.getElementById('projectTitle').value = project.title;
                         document.getElementById('projectDescription').value = project.description;
-                        document.getElementById('projectProblem').value = project.problem || '';
-                        document.getElementById('projectSolution').value = project.solution || '';
-                        document.getElementById('projectTech').value = (project.techStack || []).join(', ');
-                        document.getElementById('projectGithub').value = project.githubUrl || '';
-                        document.getElementById('projectLive').value = project.liveUrl || '';
-                        document.getElementById('projectStatus').value = project.status;
-                        document.getElementById('projectFeatured').checked = project.isFeatured;
+                        document.getElementById('projectImage').value = project.projectImage || '';
+                        document.getElementById('projectRoles').value = project.rolesResponsibility || '';
+                        document.getElementById('projectTech').value = (project.technology || project.techStack || []).join(', ');
+                        document.getElementById('projectDuration').value = project.duration || '';
+                        document.getElementById('projectSourceCode').value = project.sourceCodeLink || project.githubUrl || '';
+                        document.getElementById('projectLiveView').value = project.liveViewLink || project.liveUrl || '';
+
+                        // Show image preview if exists
+                        if (project.projectImage) {
+                            document.getElementById('imagePreview').innerHTML =
+                                `<img src="${project.projectImage}" class="max-w-xs max-h-48 rounded border" alt="Preview">`;
+                        }
 
                         document.getElementById('projectFormTitle').textContent = 'Edit Project';
                         document.getElementById('projectSubmitText').textContent = 'Update Project';
@@ -721,8 +734,8 @@
         document.getElementById('cancelEdit').addEventListener('click', () => {
             document.getElementById('projectForm').reset();
             document.getElementById('projectId').value = '';
-            document.getElementById('projectProblem').value = '';
-            document.getElementById('projectSolution').value = '';
+            document.getElementById('projectImage').value = '';
+            document.getElementById('imagePreview').innerHTML = '';
             document.getElementById('projectFormTitle').textContent = 'Add New Project';
             document.getElementById('projectSubmitText').textContent = 'Add Project';
             document.getElementById('cancelEdit').classList.add('hidden');
@@ -749,23 +762,7 @@
             }
         }
 
-        // Toggle Featured
-        async function toggleFeatured(id) {
-            try {
-                const res = await fetch(`${API_BASE}/admin/projects/${id}/toggle-featured`, {
-                    method: 'PUT',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
 
-                const data = await res.json();
-                if (data.success) {
-                    loadProjects();
-                    loadDashboard();
-                }
-            } catch (error) {
-                alert('Failed to toggle featured status');
-            }
-        }
 
         // Check if already logged in
         if (token) {

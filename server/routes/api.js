@@ -101,7 +101,48 @@ router.get('/resume/download', async (req, res) => {
 // PROJECT ROUTES
 // =======================
 
-// GET /api/projects - Public
+// =======================
+// PROJECT ROUTES
+// =======================
+
+// GET /api/projects/summary - Public (Optimized for listing)
+router.get('/projects/summary', async (req, res) => {
+    try {
+        // Only return fields needed for card display
+        const projects = await Project.find()
+            .select('title description projectImage technology techStack createdAt')
+            .sort({ createdAt: -1 });
+
+        // Transform to ensure consistent field names
+        const summaries = projects.map(p => ({
+            _id: p._id,
+            title: p.title,
+            description: p.description,
+            projectImage: p.projectImage,
+            technology: p.technology || p.techStack || [],
+            createdAt: p.createdAt
+        }));
+
+        res.json(summaries);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// GET /api/projects/:id - Public (Full details)
+router.get('/projects/:id', async (req, res) => {
+    try {
+        const project = await Project.findById(req.params.id);
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+        res.json(project);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// GET /api/projects - Public (All fields - for backward compatibility)
 router.get('/projects', async (req, res) => {
     try {
         const projects = await Project.find().sort({ createdAt: -1 });
@@ -111,15 +152,6 @@ router.get('/projects', async (req, res) => {
     }
 });
 
-// GET /api/projects/featured - Public
-router.get('/projects/featured', async (req, res) => {
-    try {
-        const projects = await Project.find({ isFeatured: true, status: 'live' }).sort({ createdAt: -1 });
-        res.json(projects);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 // POST /api/admin/projects - Admin only
 router.post('/admin/projects', adminAuth, async (req, res) => {

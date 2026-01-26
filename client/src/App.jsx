@@ -4,8 +4,9 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Terminal from './components/Terminal';
+import TechnicalArsenal from './components/TechnicalArsenal';
 import Projects from './components/Projects';
-import { Services, Contact } from './components/Sections';
+import Contact from './components/Sections';
 
 function App() {
   return (
@@ -36,8 +37,8 @@ function App() {
       <Hero />
       <About />
       <Terminal />
+      <TechnicalArsenal />
       <Projects />
-      <Services />
       <Contact />
 
       <footer className="py-6 text-center text-gray-500 text-sm bg-gray-100 dark:bg-gray-900">

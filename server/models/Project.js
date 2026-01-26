@@ -1,19 +1,18 @@
 const mongoose = require('mongoose');
 
 const ProjectSchema = new mongoose.Schema({
+    // Required fields
     title: { type: String, required: true },
     description: { type: String, required: true },
-    problem: { type: String },
-    solution: { type: String },
-    techStack: { type: [String], required: true },
-    liveUrl: { type: String },
-    githubUrl: { type: String },
-    isFeatured: { type: Boolean, default: false },
-    status: {
-        type: String,
-        enum: ['live', 'in-progress', 'completed'],
-        default: 'live'
-    },
+    projectImage: { type: String, required: true }, // base64 string
+    rolesResponsibility: { type: String, required: true },
+    technology: { type: [String], required: true },
+
+    // Optional fields
+    duration: { type: String },
+    sourceCodeLink: { type: String },
+    liveViewLink: { type: String },
+
     createdAt: { type: Date, default: Date.now }
 });
 

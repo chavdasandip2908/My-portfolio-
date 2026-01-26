@@ -91,7 +91,6 @@ const getStats = async (req, res) => {
         const totalContacts = await Contact.countDocuments();
         const unreadContacts = await Contact.countDocuments({ isRead: false });
         const totalProjects = await Project.countDocuments();
-        const featuredProjects = await Project.countDocuments({ isFeatured: true });
         const recentContacts = await Contact.find()
             .sort({ submittedAt: -1 })
             .limit(5)
@@ -106,7 +105,6 @@ const getStats = async (req, res) => {
                 totalContacts,
                 unreadContacts,
                 totalProjects,
-                featuredProjects,
                 recentContacts
             }
         });
@@ -418,35 +416,6 @@ const deleteProject = async (req, res) => {
     }
 };
 
-// Toggle Featured Status
-const toggleFeatured = async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        const project = await Project.findById(id);
-        if (!project) {
-            return res.status(404).json({
-                success: false,
-                message: 'Project not found'
-            });
-        }
-
-        project.isFeatured = !project.isFeatured;
-        await project.save();
-
-        res.json({
-            success: true,
-            message: `Project ${project.isFeatured ? 'featured' : 'unfeatured'} successfully`,
-            project
-        });
-    } catch (error) {
-        console.error('Toggle featured error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Failed to toggle featured status'
-        });
-    }
-};
 
 module.exports = {
     login,
@@ -462,6 +431,5 @@ module.exports = {
     getProjects,
     createProject,
     updateProject,
-    deleteProject,
-    toggleFeatured
+    deleteProject
 };

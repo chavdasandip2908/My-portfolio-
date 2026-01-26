@@ -3,89 +3,6 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { API_ENDPOINTS } from '../config/api';
 
-const Services = () => {
-    const services = [
-        {
-            title: "Web Application Development",
-            description: "Custom, scalable web apps built with React and Node.js.",
-            icon: "💻",
-            gradient: "from-blue-500 to-cyan-500"
-        },
-        {
-            title: "Mobile App Development",
-            description: "Custom, scalable mobile apps built with Flutter and Node.js.",
-            icon: "📱",
-            gradient: "from-blue-500 to-cyan-500"
-        },
-        {
-            title: "API Design & Integration",
-            description: "Robust RESTful APIs securely connected to your database.",
-            icon: "🔗",
-            gradient: "from-purple-500 to-pink-500"
-        },
-        {
-            title: "Performance Optimization",
-            description: "Speed up your existing React apps for better UX and SEO.",
-            icon: "⚡",
-            gradient: "from-yellow-500 to-orange-500"
-        },
-        {
-            title: "Bug Fixing & Maintenance",
-            description: "Reliable support to keep your systems running smoothly.",
-            icon: "🛠️",
-            gradient: "from-green-500 to-emerald-500"
-        }
-    ];
-
-    return (
-        <section id="services" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-4xl md:text-5xl font-bold text-light-text dark:text-dark-text mb-4">
-                        Services <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">I Offer</span>
-                    </h2>
-                    <p className="text-light-muted dark:text-dark-muted text-lg max-w-2xl mx-auto">
-                        Specialized technical solutions for your business needs.
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {services.map((service, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            whileHover={{ y: -8 }}
-                            className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all border border-gray-100 dark:border-gray-700"
-                        >
-                            {/* Gradient Border Effect on Hover */}
-                            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-
-                            <div className="relative">
-                                <div className={`text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300`}>
-                                    {service.icon}
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
-                                    {service.title}
-                                </h3>
-                                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                                    {service.description}
-                                </p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -242,4 +159,4 @@ const Contact = () => {
     );
 };
 
-export { Services, Contact };
+export default Contact;

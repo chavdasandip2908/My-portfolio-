@@ -15,8 +15,7 @@ const {
     getProjects,
     createProject,
     updateProject,
-    deleteProject,
-    toggleFeatured
+    deleteProject
 } = require('../controllers/adminController');
 
 // Public routes
@@ -44,6 +43,5 @@ router.get('/projects', getProjects);
 router.post('/projects', createProject);
 router.put('/projects/:id', updateProject);
 router.delete('/projects/:id', deleteProject);
-router.put('/projects/:id/toggle-featured', toggleFeatured);
 
 module.exports = router;
