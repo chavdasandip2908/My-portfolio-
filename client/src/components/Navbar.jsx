@@ -27,19 +27,77 @@ const Navbar = () => {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
-                    {/* Logo */}
+                    {/* Logo Section */}
                     <motion.div
-                        className="flex-shrink-0"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ type: "spring", stiffness: 400 }}
+                        className="flex-shrink-0 relative group"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                        <a href="#hero" className="flex items-center gap-2">
-                            <div className="w-10 h-10 bg-gradient-to-br from-primary to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
-                                <span className="text-white font-bold text-xl">S</span>
+                        <a href="#hero" className="flex items-center gap-3">
+                            {/* Logo Icon with Premium Effects */}
+                            <div className="relative">
+                                {/* Outer Glowing Ring - Animated */}
+                                <motion.div
+                                    animate={{
+                                        scale: [1, 1.1, 1],
+                                        opacity: [0.5, 0.8, 0.5]
+                                    }}
+                                    transition={{
+                                        duration: 3,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                    className="absolute -inset-1 bg-gradient-to-r from-primary via-purple-600 to-primary rounded-xl blur-md opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
+                                />
+
+                                {/* Glassmorphism Container */}
+                                <div className="relative w-11 h-11 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-xl border border-white/20 dark:border-gray-700/30 backdrop-blur-md overflow-hidden">
+                                    {/* Inner Gradient Background */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-purple-600/10 opacity-50" />
+
+                                    {/* Animated Inner Shine */}
+                                    <motion.div
+                                        animate={{
+                                            x: [-50, 100],
+                                            opacity: [0, 0.5, 0]
+                                        }}
+                                        transition={{
+                                            duration: 2,
+                                            repeat: Infinity,
+                                            repeatDelay: 3,
+                                            ease: "easeInOut"
+                                        }}
+                                        className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]"
+                                    />
+
+                                    <div className="relative flex items-center gap-0.5">
+                                        <span className="text-2xl font-black bg-gradient-to-br from-primary to-purple-600 bg-clip-text text-transparent leading-none">
+                                            &gt;
+                                        </span>
+                                        <motion.span
+                                            animate={{ opacity: [0, 1, 1, 0] }}
+                                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                            className="text-2xl font-black bg-gradient-to-br from-primary to-purple-600 bg-clip-text text-transparent leading-none"
+                                        >
+                                            _
+                                        </motion.span>
+                                    </div>
+                                </div>
                             </div>
-                            <span className="text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent hidden sm:block">
-                                Sandip
-                            </span>
+
+                            {/* Brand Name with Shimmer Effect */}
+                            <div className="flex flex-col leading-tight">
+                                <span className="text-xl font-black tracking-tight text-gray-900 dark:text-white hidden sm:block group-hover:text-primary transition-colors duration-300">
+                                    Sandip Chavda <span className="text-primary">.</span>
+                                </span>
+                                <motion.span
+                                    initial={{ width: 0 }}
+                                    whileHover={{ width: '100%' }}
+                                    className="h-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-full hidden sm:block"
+                                />
+                            </div>
                         </a>
                     </motion.div>
 
