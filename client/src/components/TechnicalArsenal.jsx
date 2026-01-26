@@ -79,10 +79,10 @@ const TechnicalArsenal = () => {
                     <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
                         <span className="text-sm font-semibold tracking-wider text-primary uppercase">Expertise</span>
                     </div>
-                    <h2 className="text-6xl md:text-7xl font-extrabold text-white mb-8 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-8 tracking-tight">
                         Technical <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">Arsenal</span>
                     </h2>
-                    <p className="text-slate-400 max-w-2xl mx-auto text-xl font-light leading-relaxed">
+                    <p className="text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
                         A curated collection of tools and technologies I've mastered to build high-performance, scalable applications.
                     </p>
                 </motion.div>

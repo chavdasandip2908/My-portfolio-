@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const commands = {
-    help: "Available commands:\n  • about\n  • skills\n  • projects\n  • services\n  • experience\n  • contact\n  • hire\n  • clear",
+    help: "Available commands:\n  • about\n  • skills\n  • projects\n  • contact\n  • hire\n  • clear",
     about: "I am a Senior Full-Stack Engineer with a passion for clean code and scalable systems.",
-    skills: "Frontend: React, Tailwind, Framer Motion\nBackend: Node.js, Express, MongoDB, Docker\nLanguages: JavaScript, TypeScript, Python, SQL",
+    skills: "Redirecting to skills section...",
     projects: "Redirecting to projects section...",
-    services: "- API Development\n- Web Application Architecture\n- Performance Optimization\n- Technical Consulting",
-    experience: "5+ years of experience building enterprise-grade applications and freelancing for global clients.",
-    contact: "Email: sandip@example.com\nLinkedIn: linkedin.com/in/sandip\nGitHub: github.com/sandip",
+    contact: "Redirecting to contact section...",
     hire: "Redirecting to contact section...",
     clear: "CLEAR_History"
 };
@@ -42,10 +40,21 @@ const Terminal = () => {
             setTimeout(() => {
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }, 500);
+        } else if (trimmedCmd === 'contact') {
+            newHistory.push({ type: 'output', content: commands.contact });
+            // Smooth scroll to contact
+            setTimeout(() => {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
         } else if (trimmedCmd === 'projects') {
             newHistory.push({ type: 'output', content: commands.projects });
             setTimeout(() => {
                 document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        } else if (trimmedCmd === 'skills') {
+            newHistory.push({ type: 'output', content: commands.skills });
+            setTimeout(() => {
+                document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
             }, 500);
         }
         else if (commands[trimmedCmd]) {
