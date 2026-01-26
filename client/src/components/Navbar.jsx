@@ -41,21 +41,21 @@ const Navbar = () => {
                                 {/* Outer Glowing Ring - Animated */}
                                 <motion.div
                                     animate={{
-                                        scale: [1, 1.1, 1],
-                                        opacity: [0.5, 0.8, 0.5]
+                                        scale: [1, 1.05, 1],
+                                        opacity: [0.3, 0.5, 0.3]
                                     }}
                                     transition={{
-                                        duration: 3,
+                                        duration: 4,
                                         repeat: Infinity,
                                         ease: "easeInOut"
                                     }}
-                                    className="absolute -inset-1 bg-gradient-to-r from-primary via-purple-600 to-primary rounded-xl blur-md opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
+                                    className="absolute -inset-1 bg-gradient-to-r from-primary via-purple-600 to-primary rounded-xl blur-sm opacity-30 group-hover:opacity-70 transition duration-1000 group-hover:duration-200"
                                 />
 
                                 {/* Glassmorphism Container */}
-                                <div className="relative w-11 h-11 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-xl border border-white/20 dark:border-gray-700/30 backdrop-blur-md overflow-hidden">
+                                <div className="relative w-11 h-11 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center border border-white/20 dark:border-gray-700/30 backdrop-blur-md overflow-hidden">
                                     {/* Inner Gradient Background */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-purple-600/10 opacity-50" />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-600/5 opacity-30" />
 
                                     {/* Animated Inner Shine */}
                                     <motion.div
