@@ -60,11 +60,11 @@ const TechnicalArsenal = () => {
     };
 
     return (
-        <section id="skills" className="relative py-32 bg-[#020617] transition-colors duration-500 overflow-hidden">
+        <section id="skills" className="relative py-32 bg-slate-50 dark:bg-[#020617] transition-colors duration-500 overflow-hidden">
             {/* Immersive Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 rounded-full blur-[120px] animate-pulse delay-1000" />
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/5 dark:bg-blue-600/10 rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/5 dark:bg-purple-600/10 rounded-full blur-[120px] animate-pulse delay-1000" />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary/5 rounded-full blur-[150px]" />
             </div>
 
@@ -76,13 +76,13 @@ const TechnicalArsenal = () => {
                     viewport={{ once: true }}
                     className="text-center mb-24"
                 >
-                    <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/5 dark:bg-white/5 border border-primary/10 dark:border-white/10 backdrop-blur-md">
                         <span className="text-sm font-semibold tracking-wider text-primary uppercase">Expertise</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-8 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight">
                         Technical <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">Arsenal</span>
                     </h2>
-                    <p className="text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
+                    <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
                         A curated collection of tools and technologies I've mastered to build high-performance, scalable applications.
                     </p>
                 </motion.div>
@@ -113,12 +113,12 @@ const TechnicalArsenal = () => {
                                 />
 
                                 {/* Card Body */}
-                                <div className="relative h-full bg-slate-900/40 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-10 flex flex-col items-center text-center overflow-hidden group-hover:border-white/20 transition-all duration-500">
+                                <div className="relative h-full bg-white/70 dark:bg-slate-900/40 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-10 flex flex-col items-center text-center overflow-hidden group-hover:border-slate-300 dark:group-hover:border-white/20 transition-all duration-500 shadow-xl shadow-slate-200/50 dark:shadow-none">
 
                                     {/* Subtle Gradient Overlay */}
                                     <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${category.color} opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
 
-                                    <h3 className="text-3xl font-black text-white mb-8 tracking-tight group-hover:scale-105 transition-transform duration-300">
+                                    <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-8 tracking-tight group-hover:scale-105 transition-transform duration-300">
                                         {category.title}
                                     </h3>
 
@@ -126,7 +126,7 @@ const TechnicalArsenal = () => {
                                         {category.skills.map((skill, sIndex) => (
                                             <span
                                                 key={sIndex}
-                                                className="px-4 py-2 bg-white/5 border border-white/10 text-slate-300 text-sm font-medium rounded-2xl hover:bg-white/10 hover:border-white/30 hover:text-white hover:scale-110 hover:-rotate-2 transition-all duration-300 cursor-default"
+                                                className="px-4 py-2 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 text-sm font-medium rounded-2xl hover:bg-slate-200 dark:hover:bg-white/10 hover:border-slate-300 dark:hover:border-white/30 hover:text-slate-900 dark:hover:text-white hover:scale-110 hover:-rotate-2 transition-all duration-300 cursor-default"
                                             >
                                                 {skill}
                                             </span>
