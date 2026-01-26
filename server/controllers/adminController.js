@@ -6,6 +6,8 @@ const Project = require('../models/Project');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const cache = require('../utils/cache');
+const { updateResumeCache, updateProjectCache, updateContactCache, updateStatsCache } = require('../utils/cacheHelpers');
 
 // Configure multer for resume uploads
 const storage = multer.diskStorage({
@@ -83,6 +85,16 @@ const verifyToken = (req, res) => {
 // Get Dashboard Stats
 const getStats = async (req, res) => {
     try {
+        const cacheKey = 'admin_stats';
+        const cachedStats = cache.get(cacheKey);
+
+        if (cachedStats) {
+            return res.json({
+                success: true,
+                stats: cachedStats
+            });
+        }
+
         const totalResumes = await Resume.countDocuments();
         const activeResume = await Resume.findOne({ isActive: true });
         const totalDownloads = await Resume.aggregate([
@@ -96,17 +108,21 @@ const getStats = async (req, res) => {
             .limit(5)
             .select('name email submittedAt isRead');
 
+        const stats = {
+            totalResumes,
+            activeResume: activeResume ? activeResume.originalName : 'None',
+            totalDownloads: (totalDownloads[0] && totalDownloads[0].total) || 0,
+            totalContacts,
+            unreadContacts,
+            totalProjects,
+            recentContacts
+        };
+
+        cache.set(cacheKey, stats); // Use default infinite TTL
+
         res.json({
             success: true,
-            stats: {
-                totalResumes,
-                activeResume: activeResume ? activeResume.originalName : 'None',
-                totalDownloads: (totalDownloads[0] && totalDownloads[0].total) || 0,
-                totalContacts,
-                unreadContacts,
-                totalProjects,
-                recentContacts
-            }
+            stats
         });
     } catch (error) {
         console.error('Stats error:', error);
@@ -120,7 +136,20 @@ const getStats = async (req, res) => {
 // Get All Resumes
 const getResumes = async (req, res) => {
     try {
+        const cacheKey = 'admin_resumes';
+        const cachedResumes = cache.get(cacheKey);
+
+        if (cachedResumes) {
+            return res.json({
+                success: true,
+                resumes: cachedResumes
+            });
+        }
+
         const resumes = await Resume.find().sort({ uploadedAt: -1 });
+
+        cache.set(cacheKey, resumes);
+
         res.json({
             success: true,
             resumes
@@ -152,6 +181,10 @@ const uploadResume = async (req, res) => {
         });
 
         await resume.save();
+
+        // Proactive cache update
+        await updateResumeCache();
+        await updateStatsCache();
 
         res.json({
             success: true,
@@ -194,6 +227,10 @@ const activateResume = async (req, res) => {
         const destPath = path.join(__dirname, '../public/resume.pdf');
         fs.copyFileSync(sourcePath, destPath);
 
+        // Proactive cache update
+        await updateResumeCache();
+        await updateStatsCache();
+
         res.json({
             success: true,
             message: 'Resume activated successfully',
@@ -229,6 +266,10 @@ const deleteResume = async (req, res) => {
         // Delete from database
         await Resume.findByIdAndDelete(id);
 
+        // Proactive cache update
+        await updateResumeCache();
+        await updateStatsCache();
+
         res.json({
             success: true,
             message: 'Resume deleted successfully'
@@ -245,7 +286,20 @@ const deleteResume = async (req, res) => {
 // Get All Contacts
 const getContacts = async (req, res) => {
     try {
+        const cacheKey = 'admin_contacts';
+        const cachedContacts = cache.get(cacheKey);
+
+        if (cachedContacts) {
+            return res.json({
+                success: true,
+                contacts: cachedContacts
+            });
+        }
+
         const contacts = await Contact.find().sort({ submittedAt: -1 });
+
+        cache.set(cacheKey, contacts);
+
         res.json({
             success: true,
             contacts
@@ -277,6 +331,10 @@ const markAsRead = async (req, res) => {
             });
         }
 
+        // Proactive cache update
+        await updateContactCache();
+        await updateStatsCache();
+
         res.json({
             success: true,
             message: 'Marked as read',
@@ -305,6 +363,10 @@ const deleteContact = async (req, res) => {
             });
         }
 
+        // Proactive cache update
+        await updateContactCache();
+        await updateStatsCache();
+
         res.json({
             success: true,
             message: 'Contact deleted successfully'
@@ -323,7 +385,20 @@ const deleteContact = async (req, res) => {
 // Get All Projects
 const getProjects = async (req, res) => {
     try {
+        const cacheKey = 'admin_projects';
+        const cachedProjects = cache.get(cacheKey);
+
+        if (cachedProjects) {
+            return res.json({
+                success: true,
+                projects: cachedProjects
+            });
+        }
+
         const projects = await Project.find().sort({ createdAt: -1 });
+
+        cache.set(cacheKey, projects);
+
         res.json({
             success: true,
             projects
@@ -342,6 +417,10 @@ const createProject = async (req, res) => {
     try {
         const project = new Project(req.body);
         await project.save();
+
+        // Proactive cache update
+        await updateProjectCache();
+        await updateStatsCache();
 
         res.json({
             success: true,
@@ -375,6 +454,9 @@ const updateProject = async (req, res) => {
             });
         }
 
+        // Proactive cache update
+        await updateProjectCache(id);
+
         res.json({
             success: true,
             message: 'Project updated successfully',
@@ -402,6 +484,10 @@ const deleteProject = async (req, res) => {
                 message: 'Project not found'
             });
         }
+
+        // Proactive cache update
+        await updateProjectCache(id);
+        await updateStatsCache();
 
         res.json({
             success: true,

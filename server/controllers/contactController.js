@@ -1,5 +1,7 @@
 const nodemailer = require('nodemailer');
 const Contact = require('../models/Contact');
+const cache = require('../utils/cache');
+const { updateContactCache, updateStatsCache } = require('../utils/cacheHelpers');
 
 // Email configuration
 const transporter = nodemailer.createTransport({
@@ -57,6 +59,10 @@ const sendContactEmail = async (req, res) => {
             message
         });
         await contactSubmission.save();
+
+        // Proactive cache update
+        await updateContactCache();
+        await updateStatsCache();
 
         // Email content
         const mailOptions = {
