@@ -85,7 +85,7 @@ const Hero = () => {
                             className="inline-block mb-4"
                         >
                             <span className="px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-medium text-sm md:text-base">
-                                Available for Freelance Projects
+                                Open to New Professional Opportunities
                             </span>
                         </motion.div>
 
@@ -102,10 +102,13 @@ const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-4xl md:text-6xl lg:text-7xl font-bold text-light-text dark:text-dark-text mb-6 leading-tight"
+                            className="text-3xl md:text-5xl lg:text-6xl font-bold text-light-text dark:text-dark-text mb-6 leading-tight"
                         >
-                            Building <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Reliable</span>
-                            <br />Web Systems.
+                            Architecting
+                            <br />
+                            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">High-Performance</span>
+                            <br />
+                            Web Solutions.
                         </motion.h1>
 
                         <motion.p
@@ -114,7 +117,7 @@ const Hero = () => {
                             transition={{ duration: 0.5, delay: 0.3 }}
                             className="max-w-2xl mx-auto lg:mx-0 text-light-muted dark:text-dark-muted text-lg md:text-xl mb-10 leading-relaxed"
                         >
-                            I help businesses and agencies build <span className="text-primary font-semibold">scalable APIs</span>, <span className="text-primary font-semibold">interactive frontends</span>, and <span className="text-primary font-semibold">robust full-stack applications</span> without the fluff.
+                            Specializing in <span className="text-primary font-semibold">scalable APIs</span>, <span className="text-primary font-semibold">interactive frontends</span>, and <span className="text-primary font-semibold">robust full-stack applications</span> that drive business value and solve complex technical challenges.
                         </motion.p>
 
                         <motion.div

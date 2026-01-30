@@ -7,13 +7,13 @@ const TechnicalArsenal = () => {
             title: "Frontend",
             color: "from-blue-600 via-cyan-500 to-blue-400",
             glowColor: "rgba(59, 130, 246, 0.5)",
-            skills: ["React.js", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "HTML5/CSS3", "Redux"]
+            skills: ["React.js", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "HTML5/CSS3"]
         },
         {
             title: "Backend",
             color: "from-emerald-600 via-green-500 to-teal-400",
             glowColor: "rgba(16, 185, 129, 0.5)",
-            skills: ["Node.js", "Express.js", "Go", "Nest.js", "REST APIs", "GraphQL", "JWT/Auth"]
+            skills: ["Node.js", "Express.js", "Python", "Socket.io", "REST APIs", "JWT/Auth"]
         },
         {
             title: "Database",
@@ -25,13 +25,13 @@ const TechnicalArsenal = () => {
             title: "Cloud & DevOps",
             color: "from-purple-600 via-pink-500 to-indigo-400",
             glowColor: "rgba(147, 51, 234, 0.5)",
-            skills: ["AWS", "Docker", "Kubernetes", "CI/CD", "GitHub Actions", "Nginx", "Linux"]
+            skills: ["GCP", "Docker", "Kubernetes", "CI/CD", "Nginx"]
         },
         {
             title: "Tools",
             color: "from-slate-600 via-gray-500 to-slate-400",
             glowColor: "rgba(71, 85, 105, 0.5)",
-            skills: ["VS Code", "Postman", "Git", "Figma", "Vite/Webpack", "Jest"]
+            skills: ["VS Code", "Postman", "Xampp", "Figma", "Git & GitHub"]
         }
     ];
 
@@ -83,7 +83,7 @@ const TechnicalArsenal = () => {
                         Technical <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">Arsenal</span>
                     </h2>
                     <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
-                        A curated collection of tools and technologies I've mastered to build high-performance, scalable applications.
+                        A curated collection of tools and technologies I use to architect, containerize, and deploy high-performance, scalable applications.
                     </p>
                 </motion.div>
 

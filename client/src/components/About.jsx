@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 
 const About = () => {
     const stats = [
-        { label: 'Years Experience', value: '5+' },
-        { label: 'Projects Completed', value: '50+' },
-        { label: 'Happy Clients', value: '30+' },
+        { label: 'Years Experience', value: '3+' },
+        { label: 'Projects Completed', value: '20+' },
+        { label: 'Collaborations', value: '10+' },
         { label: 'Technologies', value: '15+' }
     ];
 
@@ -38,13 +38,13 @@ const About = () => {
                             Senior Full-Stack Engineer
                         </h3>
                         <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                            I'm a passionate full-stack developer with over 5 years of experience building modern web applications.
+                            I'm a passionate full-stack developer with over 3 years of experience building modern web applications.
                             I specialize in creating scalable, performant, and user-friendly solutions that solve real business problems.
                         </p>
                         <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                            My expertise spans across frontend technologies like React and Vue, backend frameworks like Node.js and Express,
-                            and databases including MongoDB and PostgreSQL. I'm committed to writing clean, maintainable code and following
-                            industry best practices.
+                            My expertise spans across frontend technologies like React and Vue, backend frameworks like Node.js and Go,
+                            and databases including MongoDB and PostgreSQL. Beyond development, I specialize in **DevOps practices**,
+                            leveraging **Docker** for containerization and **Kubernetes** for orchestrating complex multi-container applications.
                         </p>
                         <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                             When I'm not coding, I enjoy contributing to open-source projects, learning new technologies,
@@ -55,7 +55,7 @@ const About = () => {
                         <div className="space-y-4">
                             <h4 className="text-lg font-semibold text-light-text dark:text-dark-text">Core Skills</h4>
                             <div className="flex flex-wrap gap-2">
-                                {['React', 'Node.js', 'TypeScript', 'MongoDB', 'Express', 'Tailwind CSS', 'Docker', 'Git'].map((skill) => (
+                                {['ReactJS', 'NextJS', 'Node.js', 'Kubernetes', 'Docker', 'MongoDB', 'SQL', 'TypeScript', 'Git & GitHub'].map((skill) => (
                                     <span
                                         key={skill}
                                         className="px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg text-sm font-medium"

@@ -84,7 +84,7 @@ const Contact = () => {
                         Get In <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Touch</span>
                     </h2>
                     <p className="text-lg text-light-muted dark:text-dark-muted max-w-2xl mx-auto">
-                        I am currently available for freelance projects. Have a project in mind? Let's discuss how I can help.
+                        I am always open to discussing new professional opportunities and technical challenges. Let's connect!
                     </p>
                 </motion.div>
 
