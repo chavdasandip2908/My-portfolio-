@@ -37,66 +37,22 @@ const Navbar = () => {
                     >
                         <a href="#hero" className="flex items-center gap-3">
                             {/* Logo Icon with Premium Effects */}
-                            <div className="relative">
-                                {/* Outer Glowing Ring - Animated */}
-                                <motion.div
-                                    animate={{
-                                        scale: [1, 1.05, 1],
-                                        opacity: [0.3, 0.5, 0.3]
-                                    }}
-                                    transition={{
-                                        duration: 4,
-                                        repeat: Infinity,
-                                        ease: "easeInOut"
-                                    }}
-                                    className="absolute -inset-1 bg-gradient-to-r from-primary via-purple-600 to-primary rounded-xl blur-sm opacity-30 group-hover:opacity-70 transition duration-1000 group-hover:duration-200"
-                                />
-
-                                {/* Glassmorphism Container */}
-                                <div className="relative w-11 h-11 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center border border-white/20 dark:border-gray-700/30 backdrop-blur-md overflow-hidden">
-                                    {/* Inner Gradient Background */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-600/5 opacity-30" />
-
-                                    {/* Animated Inner Shine */}
-                                    <motion.div
-                                        animate={{
-                                            x: [-50, 100],
-                                            opacity: [0, 0.5, 0]
-                                        }}
-                                        transition={{
-                                            duration: 2,
-                                            repeat: Infinity,
-                                            repeatDelay: 3,
-                                            ease: "easeInOut"
-                                        }}
-                                        className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]"
-                                    />
-
-                                    <div className="relative flex items-center gap-0.5">
-                                        <span className="text-2xl font-black bg-gradient-to-br from-primary to-purple-600 bg-clip-text text-transparent leading-none">
-                                            &gt;
-                                        </span>
-                                        <motion.span
-                                            animate={{ opacity: [0, 1, 1, 0] }}
-                                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                            className="text-2xl font-black bg-gradient-to-br from-primary to-purple-600 bg-clip-text text-transparent leading-none"
-                                        >
-                                            _
-                                        </motion.span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Brand Name with Shimmer Effect */}
-                            <div className="flex flex-col leading-tight">
-                                <span className="text-xl font-black tracking-tight text-gray-900 dark:text-white hidden sm:block group-hover:text-primary transition-colors duration-300">
-                                    Sandip Chavda <span className="text-primary">.</span>
-                                </span>
+                            <div className="relative overflow-hidden group">
                                 <motion.span
-                                    initial={{ width: 0 }}
-                                    whileHover={{ width: '100%' }}
-                                    className="h-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-full hidden sm:block"
+                                    className="text-2xl font-black tracking-tighter text-gray-900 dark:text-white hidden sm:block transition-all duration-300 group-hover:tracking-normal"
+                                >
+                                    Sandip
+                                    <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent">Chavda</span>
+                                    <span className="text-primary animate-pulse">.</span>
+                                </motion.span>
+
+                                {/* Animated underline with gradient */}
+                                <motion.div
+                                    className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-primary via-purple-500 to-pink-500 transition-all duration-300 group-hover:w-full"
                                 />
+
+                                {/* Subtle background glow on hover */}
+                                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 blur-xl transition-all duration-500 -z-10" />
                             </div>
                         </a>
                     </motion.div>
