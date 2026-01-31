@@ -7,10 +7,12 @@ import Terminal from './components/Terminal';
 import TechnicalArsenal from './components/TechnicalArsenal';
 import Projects from './components/Projects';
 import Contact from './components/Sections';
+import CustomCursor from './components/CustomCursor';
 
 function App() {
   return (
     <div className="min-h-screen bg-light-bg dark:bg-dark-bg transition-colors duration-300">
+      <CustomCursor />
       <Toaster
         position="top-right"
         toastOptions={{
