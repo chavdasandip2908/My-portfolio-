@@ -135,7 +135,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }) => {
                                                 {/* Description */}
                                                 <div>
                                                     <h3 className="flex items-center text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                                                        <span className="mr-2"></span> Description
+                                                        Description
                                                     </h3>
                                                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                                                         {displayProject.description}
@@ -146,7 +146,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }) => {
                                                 {displayProject.rolesResponsibility && (
                                                     <div>
                                                         <h3 className="flex items-center text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                                                            <span className="mr-2"></span> Roles & Responsibility
+                                                            Roles & Responsibility
                                                         </h3>
                                                         <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                                                             {displayProject.rolesResponsibility}
@@ -157,7 +157,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }) => {
                                                 {/* Technologies */}
                                                 <div>
                                                     <h3 className="flex items-center text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                                                        <span className="mr-2"></span> Technologies
+                                                        Technologies
                                                     </h3>
                                                     <div className="flex flex-wrap gap-2">
                                                         {technologies.map((tech, index) => (
@@ -175,7 +175,7 @@ const ProjectDetailModal = ({ project, isOpen, onClose }) => {
                                                 {displayProject.duration && (
                                                     <div>
                                                         <h3 className="flex items-center text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                                                            <span className="mr-2"></span> Duration
+                                                            Duration
                                                         </h3>
                                                         <p className="text-gray-700 dark:text-gray-300">
                                                             {displayProject.duration}
