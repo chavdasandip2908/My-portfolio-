@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const About = () => {
     const stats = [
-        { label: 'Years Experience', value: '3+' },
+        { label: 'Years Experience', value: '2+' },
         { label: 'Projects Completed', value: '20+' },
         { label: 'Collaborations', value: '10+' },
         { label: 'Technologies', value: '15+' }
