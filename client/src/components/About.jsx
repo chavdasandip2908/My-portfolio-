@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const About = () => {
     const stats = [
-        { label: 'Years Experience', value: '2+' },
+        { label: 'Years Experience', value: '1+' },
         { label: 'Projects Completed', value: '20+' },
         { label: 'Collaborations', value: '10+' },
         { label: 'Technologies', value: '15+' }
@@ -38,7 +38,7 @@ const About = () => {
                             Senior Full-Stack Engineer
                         </h3>
                         <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                            I'm a passionate full-stack developer with over 3 years of experience building modern web applications.
+                            I'm a passionate full-stack developer with over 1 years of experience building modern web applications.
                             I specialize in creating scalable, performant, and user-friendly solutions that solve real business problems.
                         </p>
                         <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
