@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── CSS Variables ──────────────────────────────── */
+:root {
+  --primary:     #4F46E5;
+  --primary-rgb: 79, 70, 229;
+  --accent:      #10B981;
+}
+
+/* ─── Base styles ────────────────────────────────── */
+@layer base {
+  body {
+    @apply antialiased transition-colors duration-300;
+  }
+
+  /* Hide default cursor on desktop (custom cursor handles it) */
+  @media (hover: hover) and (pointer: fine) {
+    * {
+      cursor: none !important;
+    }
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ─── Scrollbar ──────────────────────────────────── */
+/* Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  display: none;
+}
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+/* IE Legacy */
+* {
+  -ms-overflow-style: none;
+}
+/* Keep scroll functionality */
+html,
+body {
+  overflow: auto;
+}
+
+/* ─── Custom utilities ───────────────────────────── */
+@layer utilities {
+  .text-primary {
+    color: var(--primary);
+  }
+  .bg-primary {
+    background-color: var(--primary);
+  }
+  .border-primary {
+    border-color: var(--primary);
+  }
+  .ring-primary {
+    --tw-ring-color: var(--primary);
+  }
+}

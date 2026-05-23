@@ -1,0 +1,139 @@
+'use client';
+
+import { motion, Variants } from 'framer-motion';
+
+const skillCategories = [
+  {
+    title: 'Frontend',
+    color: 'from-blue-600 via-cyan-500 to-blue-400',
+    glowColor: 'rgba(59, 130, 246, 0.5)',
+    skills: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'HTML5/CSS3'],
+  },
+  {
+    title: 'Backend',
+    color: 'from-emerald-600 via-green-500 to-teal-400',
+    glowColor: 'rgba(16, 185, 129, 0.5)',
+    skills: ['Node.js', 'Express.js', 'Python', 'Socket.io', 'REST APIs', 'JWT/Auth'],
+  },
+  {
+    title: 'Database',
+    color: 'from-amber-500 via-orange-500 to-yellow-400',
+    glowColor: 'rgba(245, 158, 11, 0.5)',
+    skills: ['MongoDB', 'PostgreSQL', 'Redis', 'MySQL', 'Prisma', 'Mongoose'],
+  },
+  {
+    title: 'Cloud & DevOps',
+    color: 'from-purple-600 via-pink-500 to-indigo-400',
+    glowColor: 'rgba(147, 51, 234, 0.5)',
+    skills: ['GCP', 'Docker', 'Kubernetes', 'CI/CD', 'Nginx'],
+  },
+  {
+    title: 'Tools',
+    color: 'from-slate-600 via-gray-500 to-slate-400',
+    glowColor: 'rgba(71, 85, 105, 0.5)',
+    skills: ['VS Code', 'Postman', 'Xampp', 'Figma', 'Git & GitHub'],
+  },
+];
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: 'spring', stiffness: 100, damping: 20 },
+  },
+};
+
+export default function TechnicalArsenal() {
+  return (
+    <section
+      id="skills"
+      aria-labelledby="skills-heading"
+      className="relative py-32 bg-slate-50 dark:bg-[#0B0F19] transition-colors duration-500 overflow-hidden"
+    >
+      {/* Background blobs */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/5 dark:bg-blue-600/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/5 dark:bg-purple-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-primary/5 rounded-full blur-[150px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-24"
+        >
+          <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/5 dark:bg-white/5 border border-primary/10 dark:border-white/10 backdrop-blur-md">
+            <span className="text-sm font-semibold tracking-wider text-primary uppercase">Expertise</span>
+          </div>
+          <h1 id="skills-heading" className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight">
+            Technical{' '}
+            <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Arsenal
+            </span>
+          </h1>
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
+            A curated collection of tools and technologies I use to architect, containerize, and
+            deploy high-performance, scalable applications.
+          </p>
+        </motion.div>
+
+        <div className="flex justify-center">
+          <motion.ul
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12 max-w-6xl w-full"
+            aria-label="Technical skill categories"
+          >
+            {skillCategories.map((category) => (
+              <motion.li
+                key={category.title}
+                variants={cardVariants}
+                whileHover={{ y: -15, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
+                className="group relative"
+              >
+                {/* Glow */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-1 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl"
+                  style={{ background: `radial-gradient(circle at center, ${category.glowColor}, transparent 70%)` }}
+                />
+
+                {/* Card */}
+                <div className="relative h-full bg-white/70 dark:bg-slate-900/40 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-10 flex flex-col items-center text-center overflow-hidden group-hover:border-slate-300 dark:group-hover:border-white/20 transition-all duration-500 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                  <div aria-hidden="true" className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${category.color} opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
+
+                  <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-8 tracking-tight group-hover:scale-105 transition-transform duration-300">
+                    {category.title}
+                  </h2>
+
+                  <ul className="flex flex-wrap justify-center gap-3 mt-auto" aria-label={`${category.title} skills`}>
+                    {category.skills.map((skill) => (
+                      <li key={skill}>
+                        <span className="px-4 py-2 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 text-sm font-medium rounded-2xl hover:bg-slate-200 dark:hover:bg-white/10 hover:border-slate-300 dark:hover:border-white/30 hover:text-slate-900 dark:hover:text-white hover:scale-110 hover:-rotate-2 transition-all duration-300 cursor-default inline-block">
+                          {skill}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div aria-hidden="true" className={`absolute -bottom-8 -right-8 w-24 h-24 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 blur-2xl rounded-full transition-opacity duration-700`} />
+                </div>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
+      </div>
+    </section>
+  );
+}
