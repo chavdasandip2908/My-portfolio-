@@ -28,12 +28,12 @@ export default function AboutSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h1 id="about-heading" className="text-4xl md:text-5xl font-bold text-light-text dark:text-dark-text mb-4">
+          <h2 id="about-heading" className="text-4xl md:text-5xl font-bold text-light-text dark:text-dark-text mb-4">
             About{' '}
             <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
               Me
             </span>
-          </h1>
+          </h2>
           <p className="text-light-muted dark:text-dark-muted text-lg max-w-2xl mx-auto">
             Passionate full-stack developer with expertise in building scalable web applications
           </p>

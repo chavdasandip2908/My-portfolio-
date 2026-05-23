@@ -8,6 +8,8 @@ import TechnicalArsenal from '@/components/sections/TechnicalArsenal';
 import ProjectsList from '@/components/sections/ProjectsList';
 import ContactSection from '@/components/sections/ContactSection';
 import { fetchAllProjectSummaries } from '@/lib/data-fetchers';
+import JsonLd from '@/components/seo/JsonLd';
+import { generateUnifiedGraphSchema } from '@/components/seo/schemas';
 
 export const metadata: Metadata = {
   title: 'Sandip Chavda — Senior Full-Stack Engineer',
@@ -26,9 +28,11 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const projects = await fetchAllProjectSummaries();
+  const unifiedSchema = generateUnifiedGraphSchema(projects);
 
   return (
     <>
+      <JsonLd data={unifiedSchema} />
       <Navbar />
       <HeroSection />
       <AboutSection />

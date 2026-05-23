@@ -4,8 +4,6 @@ import './globals.css';
 import { ThemeProvider } from '@/hooks/useTheme';
 import ToastProvider from '@/components/ui/ToastProvider';
 import CustomCursor from '@/components/ui/CustomCursor';
-import JsonLd from '@/components/seo/JsonLd';
-import { personSchema, websiteSchema } from '@/components/seo/schemas';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -57,7 +55,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Sandip Chavda — Senior Full-Stack Engineer',
-    description: 'Senior Full-Stack Engineer building high-performance web solutions.',
+    description:
+      'Senior Full-Stack Engineer specializing in scalable APIs, interactive frontends, and robust full-stack applications. Available for new opportunities.',
     images: ['/developer2.png'],
   },
   robots: {
@@ -101,8 +100,6 @@ export default function RootLayout({
             `,
           }}
         />
-        <JsonLd data={personSchema} />
-        <JsonLd data={websiteSchema} />
       </head>
       <body className="min-h-screen bg-light-bg dark:bg-dark-bg font-sans transition-colors duration-300">
         <ThemeProvider>

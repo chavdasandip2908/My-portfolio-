@@ -74,12 +74,12 @@ export default function TechnicalArsenal() {
           <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/5 dark:bg-white/5 border border-primary/10 dark:border-white/10 backdrop-blur-md">
             <span className="text-sm font-semibold tracking-wider text-primary uppercase">Expertise</span>
           </div>
-          <h1 id="skills-heading" className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight">
+          <h2 id="skills-heading" className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight">
             Technical{' '}
             <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
               Arsenal
             </span>
-          </h1>
+          </h2>
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
             A curated collection of tools and technologies I use to architect, containerize, and
             deploy high-performance, scalable applications.
@@ -113,9 +113,9 @@ export default function TechnicalArsenal() {
                 <div className="relative h-full bg-white/70 dark:bg-slate-900/40 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-10 flex flex-col items-center text-center overflow-hidden group-hover:border-slate-300 dark:group-hover:border-white/20 transition-all duration-500 shadow-xl shadow-slate-200/50 dark:shadow-none">
                   <div aria-hidden="true" className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${category.color} opacity-50 group-hover:opacity-100 transition-opacity duration-500`} />
 
-                  <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-8 tracking-tight group-hover:scale-105 transition-transform duration-300">
+                  <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-8 tracking-tight group-hover:scale-105 transition-transform duration-300">
                     {category.title}
-                  </h2>
+                  </h3>
 
                   <ul className="flex flex-wrap justify-center gap-3 mt-auto" aria-label={`${category.title} skills`}>
                     {category.skills.map((skill) => (
