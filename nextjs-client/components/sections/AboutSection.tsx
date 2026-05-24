@@ -14,106 +14,126 @@ const skills = [
   'Docker', 'MongoDB', 'SQL', 'TypeScript', 'Git & GitHub',
 ];
 
+const bioParagraphs = [
+  "I'm a passionate full-stack developer with over 1 year of experience building modern web applications. I specialize in creating scalable, performant, and user-friendly solutions that solve real business problems.",
+  "My expertise spans across frontend technologies like React and Vue, backend frameworks like Node.js and Go, and databases including MongoDB and PostgreSQL. Beyond development, I specialize in DevOps practices, leveraging Docker for containerization and Kubernetes for orchestrating complex multi-container applications.",
+  "When I'm not coding, I enjoy contributing to open-source projects, learning new technologies, and sharing knowledge with the developer community.",
+];
+
 export default function AboutSection() {
   return (
     <section
       id="about"
       aria-labelledby="about-heading"
-      className="py-20 bg-white dark:bg-[#0B0F19] transition-colors duration-300"
+      className="py-24 bg-cli-bg cli-grid-bg transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="flex items-center justify-center w-full mb-16"
         >
-          <h2 id="about-heading" className="text-4xl md:text-5xl font-bold text-light-text dark:text-dark-text mb-4">
-            About{' '}
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-              Me
-            </span>
+          <div className="flex-1 h-px bg-cli-green/20" />
+          <h2
+            id="about-heading"
+            className="px-6 font-jetbrains text-lg tracking-widest text-cli-muted uppercase"
+          >
+            ABOUT ME
           </h2>
-          <p className="text-light-muted dark:text-dark-muted text-lg max-w-2xl mx-auto">
-            Passionate full-stack developer with expertise in building scalable web applications
-          </p>
+          <div className="flex-1 h-px bg-cli-green/20" />
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Description */}
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Terminal bio block */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4">
-              Senior Full-Stack Engineer
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-              I&apos;m a passionate full-stack developer with over 1 year of experience building
-              modern web applications. I specialize in creating scalable, performant, and
-              user-friendly solutions that solve real business problems.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-              My expertise spans across frontend technologies like React and Vue, backend
-              frameworks like Node.js and Go, and databases including MongoDB and PostgreSQL.
-              Beyond development, I specialize in DevOps practices, leveraging Docker for
-              containerization and Kubernetes for orchestrating complex multi-container applications.
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-              When I&apos;m not coding, I enjoy contributing to open-source projects, learning new
-              technologies, and sharing knowledge with the developer community.
-            </p>
+            {/* Terminal window */}
+            <div className="border border-cli-green/30 bg-cli-surface cli-box-glow">
+              {/* Title bar */}
+              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-cli-green/20 bg-cli-surface2">
+                <div className="w-2.5 h-2.5 rounded-full bg-cli-red" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-cli-green" />
+                <span className="ml-3 font-jetbrains text-xs text-cli-muted tracking-widest">
+                  ENGINEER :: PROFILE
+                </span>
+              </div>
 
-            {/* Core Skills */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-light-text dark:text-dark-text">Core Skills</h3>
-              <div className="flex flex-wrap gap-2" role="list" aria-label="Core technical skills">
-                {skills.map((skill) => (
-                  <span
-                    key={skill}
-                    role="listitem"
-                    className="px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg text-sm font-medium"
-                  >
-                    {skill}
-                  </span>
-                ))}
+              <div className="p-6 font-jetbrains text-sm">
+
+                <h3 className="text-cli-green text-base font-bold mb-4">
+                  Senior Full-Stack Engineer
+                </h3>
+
+                <div className="space-y-4">
+                  {bioParagraphs.map((para, i) => (
+                    <p key={i} className="text-cli-muted leading-relaxed">
+                      {para}
+                    </p>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
 
           {/* Stats Grid */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-2 gap-6"
-            role="list"
-            aria-label="Career statistics"
           >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                role="listitem"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-gradient-to-br from-white to-gray-50 dark:from-[#111827] dark:to-[#0B0F19] p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 text-center"
-              >
-                <div
-                  className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-2"
-                  aria-label={`${stat.value} ${stat.label}`}
+            <div
+              className="grid grid-cols-2 gap-4"
+              role="list"
+              aria-label="Career statistics"
+            >
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  role="listitem"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="group border border-cli-green/20 bg-cli-surface p-6 text-center hover:border-cli-green/50 hover:bg-cli-green/5 transition-all duration-300 cli-box-glow"
                 >
-                  {stat.value}
+
+                  <div
+                    className="font-jetbrains font-bold text-4xl text-cli-green cli-glow-green mb-1"
+                    aria-label={`${stat.value} ${stat.label}`}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="font-jetbrains text-cli-muted text-xs tracking-wider uppercase">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Additional system log widget */}
+            <div className="mt-4 border border-cli-green/20 bg-cli-surface p-4 font-jetbrains text-xs">
+              <div className="text-cli-muted mb-2">// SYSTEM LOG</div>
+              {[
+                { level: 'INFO', msg: 'Building scalable systems daily' },
+                { level: 'INFO', msg: 'DevOps stack: Docker + Kubernetes' },
+                { level: 'OK', msg: 'Available for new opportunities' },
+              ].map((log, i) => (
+                <div key={i} className="flex gap-3 py-0.5">
+                  <span className={`${log.level === 'OK' ? 'text-cli-green' : 'text-cli-cyan'} w-10 flex-shrink-0`}>
+                    [{log.level}]
+                  </span>
+                  <span className="text-cli-muted">{log.msg}</span>
                 </div>
-                <div className="text-gray-600 dark:text-gray-400 text-sm font-medium">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>

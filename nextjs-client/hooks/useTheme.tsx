@@ -13,8 +13,8 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('system');
-  const [resolvedTheme, setResolvedTheme] = useState<'dark' | 'light'>('light');
+  const [theme, setThemeState] = useState<Theme>('dark');
+  const [resolvedTheme, setResolvedTheme] = useState<'dark' | 'light'>('dark');
 
   const applyTheme = (t: Theme) => {
     const root = document.documentElement;
@@ -31,7 +31,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Read saved theme on mount
   useEffect(() => {
-    const saved = (localStorage.getItem('theme') as Theme) || 'system';
+    const saved = (localStorage.getItem('theme') as Theme) || 'dark';
     setThemeState(saved);
     applyTheme(saved);
     // Listen for system preference changes

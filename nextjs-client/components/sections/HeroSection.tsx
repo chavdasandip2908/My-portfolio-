@@ -1,20 +1,31 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { useTheme } from '@/hooks/useTheme';
 import { API_ENDPOINTS } from '@/lib/api';
 
-export default function HeroSection() {
-  const { resolvedTheme } = useTheme();
-  const [downloading, setDownloading] = useState(false);
+const bootLines = [
+  'Initializing system...',
+  'Loading kernel modules...',
+  'Mounting file systems...',
+  'Starting network interfaces...',
+  '[  OK  ] System operational.',
+];
 
-  const heroImage = resolvedTheme === 'dark' ? '/developer3.png' : '/developer2.png';
+export default function HeroSection() {
+  const [downloading, setDownloading] = useState(false);
+  const [visibleLines, setVisibleLines] = useState<number>(0);
+
+  // Typewriter boot effect
+  useEffect(() => {
+    if (visibleLines >= bootLines.length) return;
+    const timer = setTimeout(() => setVisibleLines((v) => v + 1), 400);
+    return () => clearTimeout(timer);
+  }, [visibleLines]);
 
   const handleHireMe = () => {
-    toast.success('Redirecting to contact form!', { icon: '👋' });
+    toast.success('Redirecting to contact section!', { icon: '👋' });
   };
 
   const handleResumeDownload = async (e: React.MouseEvent) => {
@@ -23,7 +34,6 @@ export default function HeroSection() {
     try {
       const response = await fetch(API_ENDPOINTS.resumeDownload);
       if (!response.ok) throw new Error('Resume not found');
-
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -45,148 +55,181 @@ export default function HeroSection() {
     <section
       id="hero"
       aria-label="Hero section"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-[#0B0F19] dark:via-[#111a2e] dark:to-[#0B0F19] transition-colors duration-300 pt-16"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cli-bg cli-grid-bg pt-16"
     >
-      {/* Animated Background Blobs */}
-      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute -top-40 -right-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ scale: [1.2, 1, 1.2], rotate: [90, 0, 90] }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-          className="absolute -bottom-40 -left-40 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
-        />
+      {/* Background glow accents */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-cli-green/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-cli-cyan/5 rounded-full blur-[100px]" />
       </div>
 
       <div className="relative z-10 px-4 max-w-7xl mx-auto w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Text Content */}
-          <div className="text-center lg:text-left">
+          {/* Left Content */}
+          <div>
+            {/* Status indicator */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-block mb-4"
+              transition={{ duration: 0.4 }}
+              className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 border border-cli-green/40 bg-cli-green/5 font-jetbrains text-xs tracking-widest"
             >
-              <span className="px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-medium text-sm md:text-base">
-                Open to New Professional Opportunities
-              </span>
+              <span className="w-2 h-2 rounded-full bg-cli-green cli-status-dot" aria-hidden="true" />
+              <span className="text-cli-green uppercase">[ONLINE] OPEN TO NEW PROFESSIONAL OPPORTUNITIES</span>
             </motion.div>
 
+            {/* Role */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-xl md:text-2xl font-semibold text-primary mb-4"
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="font-jetbrains text-cli-cyan text-sm tracking-widest uppercase mb-3"
             >
-              Senior Full-Stack Engineer
+              <span className="text-cli-muted">//</span> SR. FULL-STACK ENGINEER
             </motion.p>
 
+            {/* Main Heading — SEO h1 */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-3xl md:text-5xl lg:text-6xl font-bold text-light-text dark:text-dark-text mb-6 leading-tight"
+              className="font-jetbrains font-bold text-3xl md:text-4xl lg:text-5xl text-cli-text leading-tight mb-6"
             >
-              Architecting
+              ARCHITECTING{' '}
+              <span className="text-cli-green cli-glow-green">HIGH-SCALE</span>
               <br />
-              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                High-Performance
-              </span>
+              DISTRIBUTED SYSTEMS
               <br />
-              Web Solutions.
+              <span className="text-cli-cyan cli-glow-cyan">&amp; WEB SOLUTIONS</span>
             </motion.h1>
 
+            {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="max-w-2xl mx-auto lg:mx-0 text-light-muted dark:text-dark-muted text-lg md:text-xl mb-10 leading-relaxed"
+              className="font-jetbrains text-cli-muted text-sm md:text-base leading-relaxed mb-8 max-w-xl"
             >
               Specializing in{' '}
-              <span className="text-primary font-semibold">scalable APIs</span>,{' '}
-              <span className="text-primary font-semibold">interactive frontends</span>, and{' '}
-              <span className="text-primary font-semibold">robust full-stack applications</span>{' '}
+              <span className="text-cli-green">scalable APIs</span>,{' '}
+              <span className="text-cli-green">interactive frontends</span>, and{' '}
+              <span className="text-cli-green">robust full-stack applications</span>{' '}
               that drive business value and solve complex technical challenges.
             </motion.p>
 
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex flex-col md:flex-row justify-center lg:justify-start gap-4"
+              className="flex flex-col sm:flex-row gap-4"
             >
               <a
                 href="#contact"
                 onClick={handleHireMe}
-                className="group px-8 py-4 bg-accent hover:bg-emerald-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                data-text="INITIALIZE_CONTACT →"
+                className="cli-btn-primary group inline-flex items-center justify-center gap-2 px-6 py-3 bg-cli-green text-cli-bg font-jetbrains font-bold text-sm tracking-wider border border-cli-green hover:bg-cli-green/90 hover:shadow-lg hover:shadow-cli-green/20 transition-all duration-200"
+                aria-label="Go to contact section"
               >
-                <span>Contact Me</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                INITIALIZE_CONTACT
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </a>
+
               <button
                 onClick={handleResumeDownload}
                 disabled={downloading}
                 aria-label="Download Sandip Chavda's resume PDF"
-                className="px-8 py-4 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-light-text dark:text-dark-text font-semibold rounded-xl hover:border-primary dark:hover:border-primary transition-all transform hover:-translate-y-1 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-cli-green/40 text-cli-green font-jetbrains font-medium text-sm tracking-wider hover:border-cli-green/80 hover:bg-cli-green/5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {downloading ? 'Downloading...' : 'Download Resume'}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                {downloading ? 'DECRYPTING...' : 'DOWNLOAD_RESUME'}
               </button>
             </motion.div>
           </div>
 
-          {/* Developer Illustration */}
+          {/* Right — System Debug Log Panel */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="hidden lg:flex justify-center items-center"
+            className="hidden lg:block"
+            aria-hidden="true"
           >
-            <div className="relative">
-              <Image
-                src={heroImage}
-                alt="Sandip Chavda — Senior Full-Stack Engineer working on laptop"
-                width={500}
-                height={500}
-                priority
-                className="w-full max-w-lg drop-shadow-2xl"
-              />
-              <motion.div
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                aria-hidden="true"
-                className="absolute -top-8 -left-8 w-16 h-16 bg-primary/20 rounded-full blur-xl"
-              />
-              <motion.div
-                animate={{ y: [0, 20, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                aria-hidden="true"
-                className="absolute -bottom-8 -right-8 w-20 h-20 bg-accent/20 rounded-full blur-xl"
-              />
+            <div className="border border-cli-green/30 bg-cli-surface cli-box-glow">
+              {/* Panel Title Bar */}
+              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-cli-green/20 bg-cli-surface2">
+                <div className="w-2.5 h-2.5 rounded-full bg-cli-red" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-cli-green" />
+                <span className="ml-3 font-jetbrains text-xs text-cli-muted tracking-widest">
+                  SYSTEM :: INIT_SEQUENCE
+                </span>
+                <span className="ml-auto font-jetbrains text-xs text-cli-green">● ONLINE</span>
+              </div>
+
+              {/* Boot log */}
+              <div className="p-6 font-jetbrains text-sm space-y-2 min-h-[280px]">
+                {bootLines.slice(0, visibleLines).map((line, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <span className={`text-xs mt-0.5 ${
+                      i === bootLines.length - 1 ? 'text-cli-green' : 'text-cli-cyan'
+                    }`}>
+                      {i === bootLines.length - 1 ? '[ OK ]' : '[    ]'}
+                    </span>
+                    <span className={i === bootLines.length - 1 ? 'text-cli-green' : 'text-cli-muted'}>
+                      {line}
+                    </span>
+                  </div>
+                ))}
+                {visibleLines < bootLines.length && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-cli-cyan text-xs">[    ]</span>
+                    <span className="text-cli-muted">
+                      {bootLines[visibleLines].slice(0, 5)}<span className="cli-cursor" />
+                    </span>
+                  </div>
+                )}
+                {visibleLines >= bootLines.length && (
+                  <div className="mt-4 pt-4 border-t border-cli-green/10 space-y-1.5">
+                    <div className="text-cli-muted text-xs">// SYSTEM INFO</div>
+                    <div><span className="text-cli-cyan">NODE</span><span className="text-cli-muted">: </span><span className="text-cli-text">sandip@portfolio-v2</span></div>
+                    <div><span className="text-cli-cyan">ROLE</span><span className="text-cli-muted">: </span><span className="text-cli-green">Senior Full-Stack Engineer</span></div>
+                    <div><span className="text-cli-cyan">STATUS</span><span className="text-cli-muted">: </span><span className="text-cli-green">Available for hire</span></div>
+                    <div><span className="text-cli-cyan">UPTIME</span><span className="text-cli-muted">: </span><span className="text-cli-text">1+ year experience</span></div>
+                    <div className="mt-2 flex items-center gap-2 text-xs">
+                      <span className="text-cli-green">➜</span>
+                      <span className="text-cli-muted">~</span>
+                      <span className="cli-cursor" />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+
+
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
+        transition={{ delay: 2, duration: 0.5 }}
         aria-hidden="true"
-        className="absolute bottom-16 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 font-jetbrains text-xs text-cli-muted flex flex-col items-center gap-2"
       >
+        <span>SCROLL DOWN</span>
         <motion.div
-          animate={{ y: [0, 10, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center pt-2"
+          className="w-4 h-6 border border-cli-green/40 flex justify-center pt-1"
         >
-          <div className="w-1 h-2 bg-gray-400 dark:bg-gray-600 rounded-full" />
+          <div className="w-0.5 h-1.5 bg-cli-green rounded-full" />
         </motion.div>
       </motion.div>
     </section>

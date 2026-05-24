@@ -2,63 +2,226 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ─── CSS Variables ──────────────────────────────── */
-:root {
-  --primary:     #4F46E5;
-  --primary-rgb: 79, 70, 229;
-  --accent:      #10B981;
+/* ─── Tailwind v4 @theme ─────────────────────────────────────────────── */
+@theme {
+  --color-cli-bg:        #10141a;
+  --color-cli-surface:   #161b22;
+  --color-cli-surface2:  #1c2026;
+  --color-cli-surface3:  #262a31;
+  --color-cli-green:     #10b981;
+  --color-cli-green-dim: #4edea3;
+  --color-cli-cyan:      #22d3ee;
+  --color-cli-red:       #f43f5e;
+  --color-cli-text:      #dfe2eb;
+  --color-cli-muted:     #8b9bb4;
+
+  --color-primary:    #4F46E5;
+  --color-accent:     #10B981;
+  --color-dark-bg:    #0B0F19;
+  --color-dark-card:  #111827;
+  --color-dark-text:  #E5E7EB;
+  --color-dark-muted: #9CA3AF;
+  --color-light-bg:   #FFFFFF;
+  --color-light-card: #F9FAFB;
+  --color-light-text: #111827;
+  --color-light-muted:#6B7280;
+
+  --font-sans:      var(--font-inter, Inter, sans-serif);
+  --font-mono:      var(--font-fira-code, "Fira Code", monospace);
+  --font-jetbrains: var(--font-jetbrains-mono, "JetBrains Mono", monospace);
 }
 
-/* ─── Base styles ────────────────────────────────── */
+/* ─── Raw CSS variables (for use in plain CSS rules) ─────────────────── */
+:root {
+  --cli-green:    #10b981;
+  --cli-cyan:     #22d3ee;
+  --cli-red:      #f43f5e;
+  --cli-bg:       #10141a;
+  --cli-surface:  #161b22;
+  --cli-text:     #dfe2eb;
+  --cli-muted:    #8b9bb4;
+}
+
+/* ─── Base: Always dark (CLI portfolio is dark-only) ─────────────────── */
 @layer base {
-  body {
-    @apply antialiased transition-colors duration-300;
-  }
-
-  /* Hide default cursor on desktop (custom cursor handles it) */
-  @media (hover: hover) and (pointer: fine) {
-    * {
-      cursor: none !important;
-    }
-  }
-
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
+    background-color: #10141a;
+  }
+  body {
+    background-color: #10141a;
+    color: #dfe2eb;
+    font-family: var(--font-jetbrains-mono, "JetBrains Mono", monospace);
+    @apply antialiased;
   }
 }
 
-/* ─── Scrollbar ──────────────────────────────────── */
-/* Webkit (Chrome, Safari, Edge) */
-::-webkit-scrollbar {
-  display: none;
-}
-/* Firefox */
-* {
-  scrollbar-width: none;
-}
-/* IE Legacy */
-* {
-  -ms-overflow-style: none;
-}
-/* Keep scroll functionality */
-html,
-body {
-  overflow: auto;
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+html, body { overflow: auto; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   EXPLICIT CLI UTILITY CLASSES
+   These are defined directly in CSS so they always override regardless
+   of Tailwind v4 tree-shaking or class generation issues.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Backgrounds */
+.bg-cli-bg       { background-color: #10141a; }
+.bg-cli-surface  { background-color: #161b22; }
+.bg-cli-surface2 { background-color: #1c2026; }
+.bg-cli-surface3 { background-color: #262a31; }
+
+/* Text */
+.text-cli-green     { color: #10b981; }
+.text-cli-green-dim { color: #4edea3; }
+.text-cli-cyan      { color: #22d3ee; }
+.text-cli-red       { color: #f43f5e; }
+.text-cli-text      { color: #dfe2eb; }
+.text-cli-muted     { color: #8b9bb4; }
+
+/* Borders */
+.border-cli-green { border-color: #10b981; }
+.border-cli-cyan  { border-color: #22d3ee; }
+.border-cli-red   { border-color: #f43f5e; }
+.border-cli-muted { border-color: #8b9bb4; }
+
+/* Opacity variants used in components */
+.bg-cli-green\/5  { background-color: rgba(16, 185, 129, 0.05); }
+.bg-cli-green\/10 { background-color: rgba(16, 185, 129, 0.10); }
+.bg-cli-cyan\/5   { background-color: rgba(34, 211, 238, 0.05); }
+.bg-cli-cyan\/10  { background-color: rgba(34, 211, 238, 0.10); }
+.bg-cli-muted\/5  { background-color: rgba(139, 155, 180, 0.05); }
+
+.border-cli-green\/15 { border-color: rgba(16, 185, 129, 0.15); }
+.border-cli-green\/20 { border-color: rgba(16, 185, 129, 0.20); }
+.border-cli-green\/25 { border-color: rgba(16, 185, 129, 0.25); }
+.border-cli-green\/30 { border-color: rgba(16, 185, 129, 0.30); }
+.border-cli-green\/40 { border-color: rgba(16, 185, 129, 0.40); }
+.border-cli-green\/50 { border-color: rgba(16, 185, 129, 0.50); }
+.border-cli-green\/60 { border-color: rgba(16, 185, 129, 0.60); }
+.border-cli-green\/80 { border-color: rgba(16, 185, 129, 0.80); }
+
+.border-cli-cyan\/30  { border-color: rgba(34, 211, 238, 0.30); }
+.border-cli-muted\/20 { border-color: rgba(139, 155, 180, 0.20); }
+.border-cli-muted\/30 { border-color: rgba(139, 155, 180, 0.30); }
+
+.text-cli-green\/60 { color: rgba(16, 185, 129, 0.60); }
+.text-cli-green\/80 { color: rgba(16, 185, 129, 0.80); }
+
+/* Hover opacity variants */
+.hover\:bg-cli-green\/5:hover   { background-color: rgba(16, 185, 129, 0.05); }
+.hover\:bg-cli-green\/10:hover  { background-color: rgba(16, 185, 129, 0.10); }
+.hover\:bg-cli-green\/90:hover  { background-color: rgba(16, 185, 129, 0.90); }
+.hover\:bg-cli-cyan\/5:hover    { background-color: rgba(34, 211, 238, 0.05); }
+.hover\:bg-cli-cyan\/10:hover   { background-color: rgba(34, 211, 238, 0.10); }
+.hover\:bg-cli-muted\/5:hover   { background-color: rgba(139, 155, 180, 0.05); }
+.hover\:border-cli-green\/40:hover { border-color: rgba(16, 185, 129, 0.40); }
+.hover\:border-cli-green\/50:hover { border-color: rgba(16, 185, 129, 0.50); }
+.hover\:border-cli-green\/60:hover { border-color: rgba(16, 185, 129, 0.60); }
+.hover\:border-cli-green\/70:hover { border-color: rgba(16, 185, 129, 0.70); }
+.hover\:border-cli-green\/80:hover { border-color: rgba(16, 185, 129, 0.80); }
+.hover\:border-cli-cyan\/70:hover  { border-color: rgba(34, 211, 238, 0.70); }
+.hover\:text-cli-green:hover       { color: #10b981; }
+.hover\:text-cli-green-dim:hover   { color: #4edea3; }
+.hover\:text-cli-cyan:hover        { color: #22d3ee; }
+.hover\:text-cli-text:hover        { color: #dfe2eb; }
+
+/* Font utility */
+.font-jetbrains {
+  font-family: var(--font-jetbrains-mono, "JetBrains Mono", monospace);
 }
 
-/* ─── Custom utilities ───────────────────────────── */
-@layer utilities {
-  .text-primary {
-    color: var(--primary);
-  }
-  .bg-primary {
-    background-color: var(--primary);
-  }
-  .border-primary {
-    border-color: var(--primary);
-  }
-  .ring-primary {
-    --tw-ring-color: var(--primary);
-  }
+/* Focus-within border */
+.focus-within\:border-cli-green\/60:focus-within {
+  border-color: rgba(16, 185, 129, 0.60);
+}
+
+/* ─── CLI Component Classes ──────────────────────────────────────────── */
+
+/* CRT Scanline overlay */
+.cli-scanlines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 2px,
+    rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+  );
+}
+
+/* Neon text glow — green */
+.cli-glow-green {
+  text-shadow: 0 0 8px rgba(16,185,129,0.7), 0 0 20px rgba(16,185,129,0.4);
+}
+
+/* Neon text glow — cyan */
+.cli-glow-cyan {
+  text-shadow: 0 0 8px rgba(34,211,238,0.7), 0 0 20px rgba(34,211,238,0.35);
+}
+
+/* Box glow */
+.cli-box-glow {
+  box-shadow: 0 0 0 1px rgba(16,185,129,0.25), 0 0 20px rgba(16,185,129,0.08);
+}
+.cli-box-glow:hover {
+  box-shadow: 0 0 0 1px rgba(16,185,129,0.6), 0 0 30px rgba(16,185,129,0.2);
+  transition: box-shadow 0.2s ease;
+}
+
+/* Dot grid background */
+.cli-grid-bg {
+  background-image:
+    linear-gradient(rgba(16,185,129,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,185,129,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Blinking block cursor */
+@keyframes cli-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.cli-cursor::after {
+  content: '█';
+  animation: cli-blink 1s step-end infinite;
+  color: #10b981;
+  margin-left: 2px;
+  font-size: 0.85em;
+}
+
+/* Glitch hover */
+@keyframes cli-glitch {
+  0%   { clip-path: inset(0 0 95% 0); transform: translate(-2px,0); }
+  20%  { clip-path: inset(50% 0 30% 0); transform: translate(2px,0); }
+  40%  { clip-path: inset(20% 0 60% 0); transform: translate(-2px,0); }
+  60%  { clip-path: inset(75% 0 10% 0); transform: translate(2px,0); }
+  80%  { clip-path: inset(5% 0 80% 0); transform: translate(-1px,0); }
+  100% { clip-path: inset(0 0 95% 0); transform: translate(0,0); }
+}
+.cli-btn-primary { position: relative; overflow: hidden; }
+.cli-btn-primary:hover::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: #10b981;
+  animation: cli-glitch 0.3s steps(1) forwards;
+  opacity: 0.6;
+}
+
+/* Status dot pulse */
+@keyframes cli-status-pulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(16,185,129,0.9); }
+  50%       { box-shadow: 0 0 14px rgba(16,185,129,0.5), 0 0 28px rgba(16,185,129,0.25); }
+}
+.cli-status-dot {
+  animation: cli-status-pulse 2s ease-in-out infinite;
 }

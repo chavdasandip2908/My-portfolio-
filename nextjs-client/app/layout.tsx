@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter, Fira_Code } from 'next/font/google';
+import { Inter, Fira_Code, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/hooks/useTheme';
 import ToastProvider from '@/components/ui/ToastProvider';
-import CustomCursor from '@/components/ui/CustomCursor';
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,6 +15,13 @@ const firaCode = Fira_Code({
   subsets: ['latin'],
   variable: '--font-fira-code',
   display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://sandip-dev.onrender.com';
@@ -84,7 +91,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${firaCode.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${firaCode.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
         {/* Anti-FOUT: apply theme before React hydration to prevent flash */}
         <script
@@ -92,7 +99,7 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var t = localStorage.getItem('theme') || 'system';
+                  var t = localStorage.getItem('theme') || 'dark';
                   var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
                   if (dark) document.documentElement.classList.add('dark');
                 } catch(e) {}
@@ -101,9 +108,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-light-bg dark:bg-dark-bg font-sans transition-colors duration-300">
+      <body className="min-h-screen bg-white dark:bg-[#10141a] font-sans transition-colors duration-300 cli-scanlines">
         <ThemeProvider>
-          <CustomCursor />
           <ToastProvider />
           <main id="main-content" role="main">
             {children}

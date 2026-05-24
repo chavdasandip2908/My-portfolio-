@@ -16,7 +16,7 @@ const containerVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
 };
 
@@ -39,32 +39,33 @@ export default function ProjectsList({ initialProjects }: ProjectsListProps) {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-[#0B0F19] dark:to-[#080c14] transition-colors duration-300"
+      className="py-24 bg-cli-surface cli-grid-bg transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <h2
-            id="projects-heading"
-            className="text-4xl md:text-5xl font-bold text-light-text dark:text-dark-text mb-4"
-          >
-            Featured{' '}
-            <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-              Projects
-            </span>
-          </h2>
-          <p className="text-light-muted dark:text-dark-muted max-w-2xl mx-auto text-lg">
-            Explore my portfolio of projects showcasing innovative solutions and technical expertise.
-          </p>
+          <div className="flex items-center justify-center w-full mb-4">
+            <div className="flex-1 h-px bg-cli-green/20" />
+            <h2
+              id="projects-heading"
+              className="px-6 font-jetbrains text-lg tracking-widest text-cli-muted uppercase"
+            >
+              FEATURED PROJECTS
+            </h2>
+            <div className="flex-1 h-px bg-cli-green/20" />
+          </div>
+
         </motion.div>
 
         {projects.length === 0 ? (
-          <div className="text-center text-gray-500 dark:text-gray-400 py-16">
-            <p className="text-xl">No projects available yet.</p>
+          <div className="text-center border border-cli-green/20 bg-cli-bg p-16 font-jetbrains">
+            <div className="text-cli-green text-2xl mb-3">{'[ ]'}</div>
+            <p className="text-cli-muted">[INFO] No projects indexed yet.</p>
           </div>
         ) : (
           <motion.ul
@@ -72,71 +73,82 @@ export default function ProjectsList({ initialProjects }: ProjectsListProps) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             aria-label="Portfolio projects"
           >
-            {projects.map((project) => {
+            {projects.map((project, index) => {
               const technologies = project.technology || [];
 
               return (
                 <motion.li
                   key={project._id}
                   variants={cardVariants}
-                  whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
                   onClick={() => handleProjectClick(project)}
                   className="group cursor-pointer"
                 >
+                  {/* Project card — styled as a code file */}
                   <div
-                    className="block relative bg-white dark:bg-[#111827] rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-700/50 transition-all h-full"
+                    className="relative h-full border border-cli-green/20 bg-cli-bg hover:border-cli-green/50 transition-all duration-300"
                     aria-label={`View details of ${project.title}`}
                   >
-                    {/* Gradient Overlay on Hover */}
-                    <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+                    {/* File name bar */}
+                    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-cli-green/15 bg-cli-surface">
+                      <div className="w-2 h-2 rounded-full bg-cli-red" />
+                      <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                      <div className="w-2 h-2 rounded-full bg-cli-green" />
+                      <span className="ml-2 font-jetbrains text-xs text-cli-muted truncate">
+                        project_{String(index + 1).padStart(2, '0')}.sys
+                      </span>
+                    </div>
 
                     {/* Project Image */}
                     {project.projectImage && (
-                      <div className="relative h-48 overflow-hidden">
+                      <div className="relative h-44 overflow-hidden border-b border-cli-green/10">
                         <Image
                           src={project.projectImage}
                           alt={`${project.title} project screenshot`}
                           fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
-                        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-cli-bg/80 to-transparent" />
                       </div>
                     )}
 
-                    <div className="relative p-6 z-20">
-                      <h3 className="text-2xl font-bold text-light-text dark:text-dark-text mb-3 group-hover:text-primary transition-colors">
+                    {/* Card Content */}
+                    <div className="p-5">
+                      <h3 className="font-jetbrains font-bold text-cli-text text-base mb-2 group-hover:text-cli-green transition-colors line-clamp-2">
                         {project.title}
                       </h3>
 
-                      <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed line-clamp-3">
+                      <p className="font-jetbrains text-cli-muted text-xs leading-relaxed mb-4 line-clamp-3">
                         {project.description}
                       </p>
 
-                      {/* Tech Stack */}
-                      <div className="flex flex-wrap gap-2 mb-4" role="list" aria-label="Technologies used">
+                      {/* Tech chips */}
+                      <div className="flex flex-wrap gap-1.5 mb-4" role="list" aria-label="Technologies used">
                         {technologies.slice(0, 3).map((tech) => (
                           <span
                             key={tech}
                             role="listitem"
-                            className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 text-xs font-medium rounded-lg"
+                            className="px-2 py-0.5 border border-cli-cyan/30 bg-cli-cyan/5 text-cli-cyan text-[10px] font-medium font-jetbrains"
                           >
                             {tech}
                           </span>
                         ))}
                         {technologies.length > 3 && (
-                          <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium rounded-lg">
+                          <span className="px-2 py-0.5 border border-cli-muted/20 text-cli-muted text-[10px] font-medium font-jetbrains">
                             +{technologies.length - 3} more
                           </span>
                         )}
                       </div>
 
-                      <div className="flex items-center text-primary font-medium text-sm transition-colors group-hover:text-indigo-700 dark:group-hover:text-indigo-400">
-                        View Details
-                        <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      {/* View details link */}
+                      <div className="flex items-center gap-2 font-jetbrains text-xs text-cli-green group-hover:text-cli-green/80 transition-colors">
+                        <span className="text-cli-green/60">➜</span>
+                        <span>View Details</span>
+                        <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
