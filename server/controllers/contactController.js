@@ -90,8 +90,8 @@ ${message}
             `
         };
 
-        // Send email
-        await transporter.sendMail(mailOptions);
+        // Send email (Temporarily commented out to avoid Render SMTP block)
+        // await transporter.sendMail(mailOptions);
 
         res.status(200).json({
             success: true,
