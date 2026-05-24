@@ -49,20 +49,31 @@ router.post('/admin/resume/upload', adminAuth, upload.single('resume'), async (r
         // Deactivate all previous resumes
         await Resume.updateMany({}, { isActive: false });
 
+        const fileBuffer = fs.readFileSync(req.file.path);
+
         const newResume = new Resume({
             filename: req.file.filename,
             originalName: req.file.originalname,
             path: req.file.path,
+            fileData: fileBuffer,
+            contentType: req.file.mimetype,
             isActive: true
         });
 
         await newResume.save();
 
+        if (fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
+
         // Proactive cache update
         await updateResumeCache();
         await updateStatsCache();
 
-        res.status(201).json({ message: 'Resume uploaded and activated.', resume: newResume });
+        const safeResume = newResume.toObject();
+        delete safeResume.fileData;
+
+        res.status(201).json({ message: 'Resume uploaded and activated.', resume: safeResume });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -78,7 +89,7 @@ router.get('/resume/latest', async (req, res) => {
             return res.json(cachedResume);
         }
 
-        const resume = await Resume.findOne({ isActive: true });
+        const resume = await Resume.findOne({ isActive: true }).select('-fileData');
         if (!resume) {
             return res.status(404).json({ error: 'No active resume found.' });
         }
@@ -94,7 +105,7 @@ router.get('/resume/latest', async (req, res) => {
 router.get('/resume/download', async (req, res) => {
     try {
         const resume = await Resume.findOne({ isActive: true });
-        if (!resume) {
+        if (!resume || !resume.fileData) {
             return res.status(404).json({ error: 'No active resume found.' });
         }
 
@@ -105,12 +116,9 @@ router.get('/resume/download', async (req, res) => {
         // Proactive cache update for download count
         await updateStatsCache();
 
-        const filePath = resume.path; // Use 'path' from new schema
-        if (fs.existsSync(filePath)) {
-            res.download(filePath, resume.originalName || 'Resume.pdf');
-        } else {
-            res.status(404).json({ error: 'File not found on server.' });
-        }
+        res.set('Content-Type', resume.contentType || 'application/pdf');
+        res.set('Content-Disposition', `attachment; filename="${resume.originalName || 'Resume.pdf'}"`);
+        res.send(resume.fileData);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

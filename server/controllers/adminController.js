@@ -146,7 +146,7 @@ const getResumes = async (req, res) => {
             });
         }
 
-        const resumes = await Resume.find().sort({ uploadedAt: -1 });
+        const resumes = await Resume.find().select('-fileData').sort({ uploadedAt: -1 });
 
         cache.set(cacheKey, resumes);
 
@@ -173,23 +173,34 @@ const uploadResume = async (req, res) => {
             });
         }
 
+        const fileBuffer = fs.readFileSync(req.file.path);
+
         const resume = new Resume({
             filename: req.file.filename,
             originalName: req.file.originalname,
             path: req.file.path,
+            fileData: fileBuffer,
+            contentType: req.file.mimetype,
             isActive: false
         });
 
         await resume.save();
 
+        if (fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
+
         // Proactive cache update
         await updateResumeCache();
         await updateStatsCache();
 
+        const safeResume = resume.toObject();
+        delete safeResume.fileData;
+
         res.json({
             success: true,
             message: 'Resume uploaded successfully',
-            resume
+            resume: safeResume
         });
     } catch (error) {
         console.error('Upload error:', error);
@@ -213,7 +224,7 @@ const activateResume = async (req, res) => {
             id,
             { isActive: true },
             { new: true }
-        );
+        ).select('-fileData');
 
         if (!resume) {
             return res.status(404).json({
@@ -221,11 +232,6 @@ const activateResume = async (req, res) => {
                 message: 'Resume not found'
             });
         }
-
-        // Copy to public folder as resume.pdf
-        const sourcePath = resume.path;
-        const destPath = path.join(__dirname, '../public/resume.pdf');
-        fs.copyFileSync(sourcePath, destPath);
 
         // Proactive cache update
         await updateResumeCache();
@@ -250,21 +256,14 @@ const deleteResume = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const resume = await Resume.findById(id);
+        const resume = await Resume.findByIdAndDelete(id);
+        
         if (!resume) {
             return res.status(404).json({
                 success: false,
                 message: 'Resume not found'
             });
         }
-
-        // Delete file
-        if (fs.existsSync(resume.path)) {
-            fs.unlinkSync(resume.path);
-        }
-
-        // Delete from database
-        await Resume.findByIdAndDelete(id);
 
         // Proactive cache update
         await updateResumeCache();

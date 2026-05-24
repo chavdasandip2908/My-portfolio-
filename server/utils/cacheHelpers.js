@@ -7,8 +7,8 @@ const cache = require('./cache');
  * Proactively update the resume caches
  */
 const updateResumeCache = async () => {
-    const resumes = await Resume.find().sort({ uploadedAt: -1 });
-    const latestResume = await Resume.findOne({ isActive: true });
+    const resumes = await Resume.find().select('-fileData').sort({ uploadedAt: -1 });
+    const latestResume = await Resume.findOne({ isActive: true }).select('-fileData');
 
     cache.set('admin_resumes', resumes);
     if (latestResume) {
