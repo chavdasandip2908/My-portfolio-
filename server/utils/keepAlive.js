@@ -13,7 +13,7 @@ const setupKeepAlive = () => {
     const frontendUrl = process.env.FRONTEND_URL_V2 || 'http://localhost:3000';
 
     // Run every 14 minutes (Render sleeps after 15 minutes of inactivity)
-    cron.schedule('*/1 * * * *', async () => {
+    cron.schedule('*/14 * * * *', async () => {
         try {
             // Ping Backend
             const response = await axios.get(`${serverUrl}/api/keep-alive`);
