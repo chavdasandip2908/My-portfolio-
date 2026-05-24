@@ -23,6 +23,7 @@ app.use(cors({
             'https://sandip-dev.onrender.com',
             "http://localhost:5001",
             process.env.FRONTEND_URL,
+            process.env.FRONTEND_URL_V2,
             process.env.SERVER_URL,
         ].filter(Boolean);
 
