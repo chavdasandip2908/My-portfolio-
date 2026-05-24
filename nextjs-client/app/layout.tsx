@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '600', '700'],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://sandip-dev.onrender.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://sandip-chavda-dev.onrender.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -82,6 +82,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'I1JHyBupT4DanuEE3nYATCj2mdgpghipNcsUaAg615I',
+  },
+  icons: {
+    icon: '/favicon.png',
   },
 };
 
