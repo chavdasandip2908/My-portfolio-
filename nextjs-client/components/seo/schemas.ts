@@ -96,6 +96,9 @@ export function generateUnifiedGraphSchema(projects: ProjectSummary[]) {
     about: {
       '@id': `${SITE_URL}/#person`,
     },
+    mainEntity: {
+      '@id': `${SITE_URL}/#person`,
+    },
   };
 
   const projectListItems = projects.map((project, idx) => ({
