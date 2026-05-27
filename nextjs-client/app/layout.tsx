@@ -35,10 +35,31 @@ export const metadata: Metadata = {
   description:
     'Senior Full-Stack Engineer specializing in scalable APIs, interactive frontends, and robust full-stack applications. Available for new opportunities.',
   keywords: [
-    'Full Stack Engineer', 'Senior Developer', 'React Developer',
-    'Next.js Developer', 'Node.js', 'MongoDB', 'TypeScript',
-    'Docker', 'Kubernetes', 'Sandip Chavda', 'Web Developer India',
-    'Hire Full Stack Developer',
+    // Personal Brand & General
+    'Sandip Chavda', 'Sandip Chavda Portfolio', 'Sandip Chavda Web Developer', 
+    'Sandip Chavda Software Engineer', 'Chavda Sandip', 'Sandip Developer',
+    
+    // Roles & Titles
+    'Full Stack Engineer', 'Senior Full Stack Developer', 'Software Engineer India',
+    'Frontend Developer', 'Backend Developer', 'Web Developer India', 
+    'Freelance Web Developer', 'Full Stack Web Developer', 'Software Developer',
+    'UI/UX Developer', 'Web Application Developer', 'SaaS Developer',
+    
+    // Technologies & Stacks
+    'React Developer', 'Next.js Developer', 'MERN Stack Developer', 
+    'Node.js Developer', 'TypeScript Expert', 'Docker', 'Kubernetes', 'MongoDB',
+    'Express.js Developer', 'Tailwind CSS', 'API Development', 'REST APIs', 
+    'GraphQL', 'Redux', 'JavaScript Developer',
+    
+    // Hiring Intent
+    'Hire Full Stack Developer', 'Hire React Developer', 'Hire Next.js Developer',
+    'Hire Node.js Developer', 'Hire Web Developer India', 'Looking for Web Developer',
+    'Remote Full Stack Developer', 'Contract Web Developer',
+    
+    // Niches & Descriptors
+    'Top Web Developer', 'Creative Developer', 'Best Portfolio Website',
+    'Scalable Web Apps', 'Custom Software Development', 'High-Performance Websites',
+    'Interactive Frontends', 'Robust Backend Systems'
   ],
   authors: [{ name: 'Sandip Chavda', url: SITE_URL }],
   creator: 'Sandip Chavda',
