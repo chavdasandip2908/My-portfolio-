@@ -118,7 +118,7 @@ export default function ContactSection() {
               id="contact-heading"
               className="px-6 font-jetbrains text-lg tracking-widest text-cli-muted uppercase"
             >
-              CONTACT SANDIP CHAVDA
+              GET IN TOUCH
             </h2>
             <div className="flex-1 h-px bg-cli-green/20" />
           </div>
