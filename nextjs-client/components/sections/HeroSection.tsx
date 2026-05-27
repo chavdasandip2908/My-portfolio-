@@ -95,6 +95,7 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="font-jetbrains font-bold text-3xl md:text-4xl lg:text-5xl text-cli-text leading-tight mb-6"
             >
+              <span className="text-cli-green cli-glow-green block mb-2 text-2xl md:text-3xl">SANDIP CHAVDA</span>
               ARCHITECTING{' '}
               <span className="text-cli-green cli-glow-green">HIGH-SCALE</span>
               <br />
