@@ -55,7 +55,7 @@ export default function ProjectsList({ initialProjects }: ProjectsListProps) {
               id="projects-heading"
               className="px-6 font-jetbrains text-lg tracking-widest text-cli-muted uppercase"
             >
-              FEATURED PROJECTS
+              SANDIP CHAVDA'S PROJECTS
             </h2>
             <div className="flex-1 h-px bg-cli-green/20" />
           </div>

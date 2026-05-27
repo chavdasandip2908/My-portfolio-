@@ -40,7 +40,7 @@ export default function AboutSection() {
             id="about-heading"
             className="px-6 font-jetbrains text-lg tracking-widest text-cli-muted uppercase"
           >
-            ABOUT ME
+            ABOUT SANDIP CHAVDA
           </h2>
           <div className="flex-1 h-px bg-cli-green/20" />
         </motion.div>
